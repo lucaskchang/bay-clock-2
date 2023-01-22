@@ -1,0 +1,142 @@
+[
+    {},
+    {
+        "Morning Meeting": {
+            "start": {"hour": 8, "minute": 30},
+            "end": {"hour": 8, "minute": 50}
+        },
+        "A": {
+            "start": {"hour": 8, "minute": 55},
+            "end": {"hour": 10, "minute": 10}
+        },
+        "B": {
+            "start": {"hour": 10, "minute": 15},
+            "end": {"hour": 11, "minute": 30}
+        },
+        "Lunch": {
+            "start": {"hour": 11, "minute": 30},
+            "end": {"hour": 12, "minute": 30}
+        },
+        "C": {
+            "start": {"hour": 12, "minute": 30},
+            "end": {"hour": 13, "minute": 45}
+        },
+        "D": {
+            "start": {"hour": 13, "minute": 50},
+            "end": {"hour": 15, "minute": 5}
+        },
+        "Tutorial": {
+            "start": {"hour": 15, "minute": 5},
+            "end": {"hour": 15, "minute": 35}
+        }
+    },
+    {
+        "Group Advisory/1-on-1s": {
+            "start": {"hour": 8, "minute": 30},
+            "end": {"hour": 8, "minute": 50}
+        },
+        "E": {
+            "start": {"hour": 8, "minute": 55},
+            "end": {"hour": 10, "minute": 10}
+        },
+        "F": {
+            "start": {"hour": 10, "minute": 15},
+            "end": {"hour": 11, "minute": 30}
+        },
+        "Lunch": {
+            "start": {"hour": 11, "minute": 30},
+            "end": {"hour": 12, "minute": 30}
+        },
+        "A": {
+            "start": {"hour": 12, "minute": 30},
+            "end": {"hour": 13, "minute": 45}
+        },
+        "B": {
+            "start": {"hour": 13, "minute": 50},
+            "end": {"hour": 15, "minute": 5}
+        },
+        "Tutorial": {
+            "start": {"hour": 15, "minute": 5},
+            "end": {"hour": 15, "minute": 35}
+        }
+    },
+    {
+        "Morning Meeting": {
+            "start": {"hour": 8, "minute": 30},
+            "end": {"hour": 8, "minute": 50}
+        },
+        "C": {
+            "start": {"hour": 8, "minute": 55},
+            "end": {"hour": 10, "minute": 10}
+        },
+        "D": {
+            "start": {"hour": 10, "minute": 15},
+            "end": {"hour": 11, "minute": 30}
+        },
+        "Lunch": {
+            "start": {"hour": 11, "minute": 30},
+            "end": {"hour": 12, "minute": 30}
+        },
+        "E": {
+            "start": {"hour": 12, "minute": 30},
+            "end": {"hour": 13, "minute": 45}
+        },
+        "F": {
+            "start": {"hour": 13, "minute": 50},
+            "end": {"hour": 15, "minute": 5}
+        },
+        "Tutorial": {
+            "start": {"hour": 15, "minute": 5},
+            "end": {"hour": 15, "minute": 35}
+        }
+    },
+    {
+        "Group Advisory/1-on-1s": {
+            "start": {"hour": 8, "minute": 30},
+            "end": {"hour": 8, "minute": 50}
+        },
+        "B": {
+            "start": {"hour": 8, "minute": 55},
+            "end": {"hour": 10, "minute": 25}
+        },
+        "A": {
+            "start": {"hour": 10, "minute": 35},
+            "end": {"hour": 12, "minute": 5}
+        },
+        "Lunch": {
+            "start": {"hour": 12, "minute": 5},
+            "end": {"hour": 12, "minute": 55}
+        },
+        "C": {
+            "start": {"hour": 12, "minute": 55},
+            "end": {"hour": 14, "minute": 25}
+        },
+        "Tutorial": {
+            "start": {"hour": 14, "minute": 25},
+            "end": {"hour": 14, "minute": 55}
+        }
+    },
+    {
+        "Morning Meeting": {
+            "start": {"hour": 8, "minute": 30},
+            "end": {"hour": 8, "minute": 50}
+        },
+        "D": {
+            "start": {"hour": 8, "minute": 55},
+            "end": {"hour": 10, "minute": 25}
+        },
+        "F": {
+            "start": {"hour": 10, "minute": 35},
+            "end": {"hour": 12, "minute": 5}
+        },
+        "Lunch": {
+            "start": {"hour": 12, "minute": 5},
+            "end": {"hour": 12, "minute": 55}
+        },
+        "E": {
+            "start": {"hour": 12, "minute": 55},
+            "end": {"hour": 14, "minute": 25}
+        }
+    },
+    {}
+]

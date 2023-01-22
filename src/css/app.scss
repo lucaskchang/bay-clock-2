@@ -1,0 +1,20 @@
+// app global css in SCSS form
+
+@font-face {
+  font-family: highwaygothic;
+  src: url(./fonts/HWGW.woff);
+}
+
+* {
+  font-family: highwaygothic;
+}
+
+.useful-links-card {
+  width:100%; 
+  max-width: 300px;
+}
+
+.no-link-style {
+  color: #d3d3d3;
+  text-decoration: none;
+}

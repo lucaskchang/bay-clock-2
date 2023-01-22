@@ -1,0 +1,876 @@
+<template>
+<div class="q-ma-md">
+  <div :class="['row', 'justify-between', 'text-h3', darkMode ? 'text-grey-4' : 'text-dark']">
+    <div v-if="toggles['Clock']" class="col-auto">
+      {{ timeAsClock }}
+    </div>
+    <div v-if="toggles['Time Left']" class="col-auto">
+      {{ currentBlock }}
+    </div>
+  </div>
+  <div :class="['row', 'justify-between', 'text-h4', darkMode ? 'text-grey-5' : 'text-grey-7']">
+    <div v-if="toggles['Date']" class="col-auto">
+      {{ timeAsDate }}
+    </div>
+    <div v-if="special_schedule && toggles['Special Schedule Indicator']" class="col-auto">
+      SPECIAL SCHEDULE
+    </div>
+    <div v-if="immersive && toggles['Special Schedule Indicator']" class="col-auto">
+      IMMERSIVE
+    </div>
+  </div>
+
+  <div class="col">
+    <div
+      v-for="(start_end, block) of scheduleDictionary"
+      :key="block"
+      class="row q-ma-xl"
+    >
+        <q-linear-progress :class="[darkMode ? 'bg-dark' : 'bg-grey-3']" size="25px" :color="getColorCode(barColor)" :value="getProgress(block)" style="border-radius: 50px">
+          <div :class="['row', 'justify-between', 'text-subtitle1', 'absolute-full', darkMode ? 'text-grey-4' : 'text-dark']">
+            <div class="col-auto q-ml-sm">
+              {{ getCustomName(block) }}
+            </div>
+            <div class="col-auto q-mr-sm">
+              {{ formatTime(start_end['start']) }} - {{ formatTime(start_end['end']) }}
+            </div>
+          </div>
+        </q-linear-progress>
+    </div>
+  </div>
+
+  <div class="row q-ma-lg">
+    <div class="col-auto q-mx-sm">
+      <q-btn :color="getColorCode(buttonColors['Links'])" label="Useful Links" @click="linksModal = true" rounded no-caps />
+    </div>
+    <div class="col-auto q-mx-sm">
+      <q-btn :color="getColorCode(buttonColors['Menu'])" label="Lunch Menu" @click="lunchModal = true" rounded no-caps />
+    </div>
+    <div class="col-auto q-mx-sm">
+      <q-btn :color="getColorCode(buttonColors['Schedule'])" label="Custom Schedule" @click="scheduleModal = true" rounded no-caps />
+    </div>
+    <div class="col-auto q-mx-sm">
+      <q-btn :color="getColorCode(buttonColors['Styles'])" label="Customize" @click="styleModal = true" rounded no-caps />
+    </div>
+    <div class="col-auto q-mx-sm">
+      <q-btn :color="getColorCode(buttonColors['Weekly'])" label="Weekly Schedule" @click="weekModal = true" rounded no-caps />
+    </div>
+  </div>
+
+  <q-dialog v-model="lunchModal">
+    <q-card style="width: 1300px; max-width: 80vw; height: 80vh;">
+      <q-pdfviewer
+        v-model="lunchModal"
+        src="src\data\menu\menu.pdf"
+        type="html5"
+      />
+    </q-card>
+  </q-dialog>
+
+  <q-dialog
+    v-model="scheduleModal"
+    @shake="scheduleShake"
+    persistent
+  >
+    <q-card style="width: 900px; max-width: 80vw;">
+      <q-card-section class="text-h5">
+        Custom Schedule
+      </q-card-section>
+      <q-card-section>
+        <q-form
+          @submit="setSchedule"
+          @reset="resetSchedule"
+          class="q-gutter-md"
+        >
+          <div v-if="!immersive">
+            <q-input
+              v-for="block of Object.keys(tempSchedule)"
+              :key="block"
+              :label="block"
+              v-model="tempSchedule[block]"
+              class="q-my-lg"
+              dense
+              rounded
+              outlined
+            >
+            </q-input>
+            <q-btn
+              class="q-mb-lg"
+              label="Sports/Activities Schedule"
+              color="primary"
+              @click="activityModal = true"
+              push
+            />
+          </div>
+          <div v-else>
+            <q-input
+              label="Immersive"
+              v-model="tempCustomImmersiveName"
+              class="q-mb-lg"
+              dense
+              rounded
+              outlined
+            >
+            </q-input>
+          </div>
+          <div>
+            <q-btn label="Save" type="submit" color="primary"/>
+            <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
+            <q-btn label="Cancel" @click="scheduleModal = false" color="negative" flat class="float-right" />
+          </div>
+        </q-form>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
+
+  <q-dialog
+    v-model="activityModal"
+  >
+    <q-card style="width: 900px; max-width: 80vw;">
+      <q-card-section>
+        <div class="row text-center q-ma-sm">
+          <div
+            v-for="day of ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']"
+            :key="day"
+            class="col"
+          >
+            <h6>{{ day }}</h6>
+            <q-input filled v-model="activitySchedule[day]['start']" mask="time" :rules="['time']">
+              <template v-slot:append>
+                <q-icon name="access_time" class="cursor-pointer">
+                  <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                    <q-time v-model="time">
+                      <div class="row items-center justify-end">
+                        <q-btn v-close-popup label="Close" color="primary" flat />
+                      </div>
+                    </q-time>
+                  </q-popup-proxy>
+                </q-icon>
+              </template>
+            </q-input>
+            <p>to</p>
+            <q-input filled v-model="time" mask="time" :rules="['time']">
+              <template v-slot:append>
+                <q-icon name="access_time" class="cursor-pointer">
+                  <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                    <q-time v-model="time">
+                      <div class="row items-center justify-end">
+                        <q-btn v-close-popup label="Close" color="primary" flat />
+                      </div>
+                    </q-time>
+                  </q-popup-proxy>
+                </q-icon>
+              </template>
+            </q-input>
+          </div>
+        </div>
+      </q-card-section>
+      <div class="q-pa-lg">
+        <q-btn label="Save" @click="setStyles" color="primary"/>
+        <q-btn label="Reset" @click="resetStyles" color="primary" flat class="q-ml-sm" />
+        <q-btn label="Cancel" @click="styleModal = false" color="negative" flat class="float-right" />
+      </div>
+    </q-card>
+  </q-dialog>
+
+  <q-dialog
+    v-model="styleModal"
+    @shake="stylesShake"
+    persistent
+  >
+    <q-card style="width: 900px; max-width: 80vw;">
+      <q-card-section class="text-h5">
+        Custom Styles - {{ styleTab.charAt(0).toUpperCase() + styleTab.slice(1) }}
+      </q-card-section>
+      <q-card-section>
+        <q-splitter v-model="styleSplitter" disable>
+          <template v-slot:before>
+            <q-tabs v-model="styleTab" vertical no-caps class="text-h6">
+              <q-tab name="colors" label="Colors" />
+              <q-tab name="toggles" label="Toggles" />
+              <q-tab name="other" label="Other" />
+            </q-tabs>
+          </template>
+
+          <template v-slot:after>
+            <q-tab-panels
+              v-model="styleTab"
+              animated
+              swipeable
+              vertical
+              transition-prev="jump-up"
+              transition-next="jump-up"
+            >
+              <q-tab-panel name="colors" class="q-pt-none">
+                <div>
+                  <h6 class="q-mb-none">Progress Bar Color</h6>
+                  <div class="col-auto q-gutter-sm">
+                    <q-btn
+                      v-for="(color, hex) of colorPalette"
+                      :key="color"
+                      :color="color"
+                      @click="tempBarColor = hex"
+                      :icon="_.isEqual(tempBarColor, hex) ? 'check' : ''"
+                      push
+                    />
+                    <q-btn icon="palette" paddig="md" push>
+                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                        <q-color
+                          v-model="tempBarColor"
+                          default-view="palette"
+                          :palette="Object.keys(customColorPalette)"
+                          no-footer
+                          no-header-tabs
+                          style="max-width:250px"
+                        />
+                      </q-popup-proxy>
+                    </q-btn>
+                  </div>
+                </div>
+                <div>
+                  <h6 class="q-mb-none">Button Colors</h6>
+                  <div class="row q-gutter-sm">
+                    <div class="col-auto">
+                      <q-select v-model="colorBeingChosen" :options="Object.keys(buttonColors)" dense />
+                    </div>
+                    <div class="col-auto q-gutter-sm">
+                      <q-btn
+                        v-for="(color, hex) of colorPalette"
+                        :key="color"
+                        :color="color"
+                        @click="tempButtonColors[colorBeingChosen] = hex"
+                        :icon="_.isEqual(tempButtonColors[colorBeingChosen], hex) ? 'check' : ''"
+                        push
+                      />
+                      <q-btn icon="palette" paddig="md" push>
+                        <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                          <q-color
+                            v-model="tempButtonColors[colorBeingChosen]"
+                            default-view="palette"
+                            :palette="Object.keys(customColorPalette)"
+                            no-footer
+                            no-header-tabs
+                            style="max-width:250px"
+                          />
+                        </q-popup-proxy>
+                      </q-btn>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <h6 class="q-mb-none">Dark Mode</h6>
+                  <div class="col-auto">
+                    <q-toggle
+                      v-model="tempDarkMode"
+                      color="primary"
+                      label="Dark Mode"
+                    />
+                  </div>
+                </div>
+              </q-tab-panel>
+
+              <q-tab-panel name="toggles">
+                <div class="q-gutter-md">
+                  <q-toggle
+                    v-for="(state, name) of tempToggles"
+                    :key="name"
+                    v-model="tempToggles[name]"
+                    color="primary"
+                    :label="name"
+                  />
+                </div>
+              </q-tab-panel>
+
+              <q-tab-panel name="other">
+                <q-toggle
+                  v-model="tempDetailedTime"
+                  color="primary"
+                  label="Detailed Time Left"
+                />
+              </q-tab-panel>
+            </q-tab-panels>
+          </template>
+        </q-splitter>
+      </q-card-section>
+      <div class="q-pa-lg">
+        <q-btn label="Save" @click="setStyles" color="primary"/>
+        <q-btn label="Reset" @click="resetStyles" color="primary" flat class="q-ml-sm" />
+        <q-btn label="Cancel" @click="styleModal = false" color="negative" flat class="float-right" />
+      </div>
+    </q-card>
+  </q-dialog>
+
+  <q-dialog v-model="weekModal">
+    <q-card style="width: 1300px; max-width: 80vw;">
+      <div class="row q-ma-sm">
+        <div
+          v-for="day in [1, 2, 3, 4, 5]"
+          :key="day"
+          class="col"
+        >
+          <div class="q-ma-sm text-center">
+            <h4 class="q-my-none">{{ day }}</h4>
+          </div>
+          <div
+            v-for="(start_end, block) of getDaySchedule(day)"
+            :key="block"
+            :class="['q-px-sm', 'q-ma-sm', 'rounded-borders', 'overflow-auto', 'bg-' + (colorGuide[block] || 'blue-4') ]"
+          >
+            <p class="text-h6 q-mb-none">
+              {{ getCustomName(block) }}
+            </p>
+            <p>
+              {{ formatTime(start_end['start']) + ' - ' + formatTime(start_end['end']) }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </q-card>
+  </q-dialog>
+
+  <q-dialog v-model="linksModal">
+    <q-card style="width: 965px; max-width: 80vw;">
+      <q-card-section class="text-h5">
+        Useful Links
+      </q-card-section>
+      <q-card-section class="q-px-md q-mb-lg row items-start q-gutter-md">
+        <q-card
+          v-for="(link, name) of usefulLinks"
+          :key="name"
+          class="useful-links-card text-weight-thin"
+          :to="link"
+        >
+          <a :href="link" target="_blank">
+            <q-img src="https://images.unsplash.com/photo-1521747116042-5a810fda9664">
+              <div class="absolute-bottom text-subtitle2 text-center">
+                {{ name }}
+              </div>
+            </q-img>
+          </a>
+        </q-card>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
+
+  <div class="fixed-bottom text-subtitle1 text-center q-pa-md">
+    <p class="q-ma-none">Coded by <a href="https://lucaskchang.com" target="_blank">Lucas Chang</a></p>
+    <p class="q-mt-sm"><a href="https://github.com/lukajaa/bay-clock-2" target="_blank">Source</a> / Tools / Bug Report</p>
+  </div>
+</div>
+</template>
+
+<script setup lang="ts">
+import { ref, computed, watch, onMounted } from 'vue';
+import { useQuasar, colors } from 'quasar';
+import schedule from '../data/schedule.json';
+import immersives from '../data/immersives.json';
+import specialSchedules from '../data/special_schedules.json';
+import holidays from '../data/holidays.json';
+import colorArray from '../data/colors.json';
+import _ from 'lodash';
+
+// types
+type ScheduleType = {
+  [index: string]: string;
+  A: string,
+  B: string,
+  C: string,
+  D: string,
+  E: string,
+  F: string
+}
+
+type OtherScheduleType = {
+  [index: string]: {
+    start: Date,
+    end: Date
+  };
+}
+
+type StringString = {
+  [index: string]: string;
+}
+
+const $q = useQuasar(); // Quasar instance
+const darkMode = ref<boolean>(false) // Dark mode state
+const special_schedule = computed<boolean>(function() { // Special schedule state
+  let now = time.value
+  for (const date of Object.keys(specialSchedules)) {
+    let date_object = new Date(date);
+    if (date_object.getFullYear() == now.getFullYear() && date_object.getMonth() == now.getMonth() && now.getDate() == date_object.getDate()) {
+      return true
+    }
+  }
+  return false
+});
+const holiday = computed<string>(function() { // Holiday state
+  let now = time.value
+  for (const [name, start_end] of Object.entries(holidays)) {
+    if (now > new Date(start_end['start']) && now < new Date(start_end['end'])) {
+      return name
+    }
+  }
+  return ''
+});
+const immersive = computed<boolean>(function() { // Special schedule state
+  let now = time.value
+  if ((now > new Date(immersives['Immersive1']['start']) && now < new Date(immersives['Immersive1']['end'])) || (now > new Date(immersives['Immersive2']['start']) && now < new Date(immersives['Immersive2']['end']))) {
+    return true
+  }
+  return false
+});
+const time = ref<Date>(new Date()); // Current date
+
+const customSchedule = ref<ScheduleType>({
+  A: 'A',
+  B: 'B',
+  C: 'C',
+  D: 'D',
+  E: 'E',
+  F: 'F'
+})
+const tempSchedule = ref<ScheduleType>(customSchedule.value) // Temporary schedule for unsaved changes
+const customImmersiveName = ref<string>('Immersive')
+const tempCustomImmersiveName = ref<string>('Immersive')
+
+const activitySchedule = ref({
+  'Monday': {
+    'start': {'hour': 15, 'minute': 45},
+    'end': {'hour': 17, 'minute': 0}
+  },
+  'Tuesday': {
+    'start': {'hour': 15, 'minute': 45},
+    'end': {'hour': 17, 'minute': 0}
+  },
+  'Wednesday': {
+    'start': {'hour': 15, 'minute': 45},
+    'end': {'hour': 17, 'minute': 0}
+  },
+  'Thursday': {
+    'start': {'hour': 15, 'minute': 0},
+    'end': {'hour': 16, 'minute': 30}
+  },
+  'Friday': {
+    'start': {'hour': 14, 'minute': 35},
+    'end': {'hour': 16, 'minute': 0}
+  }
+})
+
+const colorGuide = ref<StringString>({
+  A: 'red-4',
+  B: 'pink-4',
+  C: 'purple-4',
+  D: 'blue-4',
+  E: 'green-4',
+  F: 'yellow-4',
+  'Morning Meeting': 'teal-4',
+  'Group Advisory/1-on-1s': 'indigo-4',
+  'Tutorial': 'orange-4',
+  'Lunch': 'brown-4',
+  'Immersive Morning': 'blue-4',
+  'Immersive Afternoon': 'blue-4',
+  'Break': 'green-4'
+})
+
+const lunchModal = ref<boolean>(true); // Lunch menu modal state
+const scheduleModal = ref<boolean>(false); // Custom schedule modal state
+const styleModal = ref<boolean>(false); // Style modal state
+const styleTab = ref<string>('colors'); // Style tab
+const styleSplitter = ref<number>(10); // Style splitter
+const activityModal = ref<boolean>(false); // Activity Modal State
+const weekModal  = ref<boolean>(false); // Weekly schedule modal state
+const linksModal = ref<boolean>(false); // Useful links modal state
+
+const colorPalette = ref<StringString>({ // Basic color palette
+  '#58a5dd': 'primary',
+  '#f14e9d': 'secondary',
+  '#48b646': 'positive',
+  '#f34933': 'negative',
+  '#f36e22': 'warning'
+})
+
+const tempBarColor = ref<string>('');
+const barColor = ref<string>(colors.getPaletteColor('primary'));
+
+const tempButtonColors = ref<StringString>({});
+const buttonColors = ref<StringString>({
+      'Links': '',
+      'Menu': '',
+      'Schedule': '',
+      'Styles': '',
+      'Weekly': ''
+    }
+);
+
+const colorBeingChosen = ref<string>('Links')
+const toggles = ref({ // Toggles for top bar
+  'Clock': true,
+  'Date': true,
+  'Time Left': true,
+  'Special Schedule Indicator': true
+})
+const tempToggles = ref(toggles.value);
+const tempDetailedTime = ref<boolean>(false);
+const detailedTime = ref<boolean>(false);
+const tempDarkMode = ref<boolean>(false)
+
+// Useful Links
+const usefulLinks = {
+  'Bay Site': 'https://www.bayschoolsf.org/',
+  'Canvas': 'https://bayschoolsf.instructure.com/',
+  'My Bay': 'https://bayschoolsf.myschoolapp.com/',
+  'Announcment Digest': 'https://docs.google.com/document/d/1c5YzT06GTn5CdX_7X7jZ2Ghhd5pK1aHhRRbOY78cr2M/',
+  'Bay Map': 'https://www.google.com/maps/d/edit?mid=1tBNv0IhwXTfDMeIaAX3SkCWVZGjSq5w',
+  'Bay Riptide': 'https://sites.google.com/bayschoolsf.org/the-bay-riptide/'
+}
+
+// Return the current day's schedule
+const scheduleDictionary = computed<OtherScheduleType>(function() {
+  let now = time.value;
+  let unparsedDaySchedule = {}
+
+  if (holiday.value.length > 0) {
+    return {}
+  } else if (now.getDay() == 0 || now.getDay() == 6) {
+    return {}
+  } else if (special_schedule.value) {
+    for (const [date, schedule] of Object.entries(specialSchedules)) {
+      let date_object = new Date(date);
+      if (date_object.getFullYear() == now.getFullYear() && date_object.getMonth() == now.getMonth() && now.getDate() == date_object.getDate()) {
+        unparsedDaySchedule = schedule
+      }
+    }
+  } else if ((now > new Date(immersives['Immersive1']['start']) && now < new Date(immersives['Immersive1']['end'])) || (now > new Date(immersives['Immersive2']['start']) && now < new Date(immersives['Immersive2']['end']))) {
+    unparsedDaySchedule = immersives['Schedule']
+  } else {
+    unparsedDaySchedule = schedule[now.getDay()];
+  }
+
+  return parseScheduleDict(unparsedDaySchedule);
+});
+
+// Returns color palette
+const customColorPalette = computed(function() {
+  let color_palette : StringString = {};
+  for (let color of colorArray) {
+    color_palette[colors.getPaletteColor(color)] = color;
+  }
+  return color_palette
+})
+
+// Get the current time in the format HH:MM:SS
+const timeAsClock = computed(function() {
+  let now = time.value;
+  let hours = now.getHours();
+  let minutes = now.getMinutes() < 10 ? '0' + now.getMinutes() : now.getMinutes();
+  let seconds = now.getSeconds() < 10 ? '0' + now.getSeconds() : now.getSeconds();
+  let meridiem = 'AM';
+  if (hours > 11) {
+    if (hours != 12){
+      hours -=12
+    }
+    meridiem = 'PM';
+  }
+
+  return `${hours}:${minutes}:${seconds}${meridiem}`;
+});
+// Get the current date
+const timeAsDate = computed(function() {
+  return time.value.toDateString();
+});
+
+// Get the current block
+const currentBlock = computed(function() {
+  if (holiday.value.length > 0) {
+    return holiday.value
+  }
+  if (Object.keys(scheduleDictionary.value).length == 0) { // Weekend
+    return 'Weekend';
+  }
+  let now = time.value;
+  if (scheduleDictionary.value[Object.keys(scheduleDictionary.value)[0]]['start'] > now) { // start time of first block
+    return 'Before School';
+  } else if (scheduleDictionary.value[Object.keys(scheduleDictionary.value)[Object.keys(scheduleDictionary.value).length - 1]]['end'] < now) { // end time of last block
+    return 'School is over'
+  }
+  for (const start_end of Object.values(scheduleDictionary.value)) {
+    if (now >= start_end['start'] && now <= start_end['end']) {
+      // Return time left in block
+      let time_left= start_end['end'].getTime() - now.getTime()
+      if (detailedTime.value) {
+        let hours = Math.floor(time_left/3600000) == 0 ? '' : Math.floor(time_left/3600000) + ':'
+        let minutes = Math.floor(time_left%3600000/60000) < 10 ? '0' + Math.floor(time_left%3600000/60000) : Math.floor(time_left%3600000/60000)
+        let seconds = Math.floor(time_left%3600000%60000/1000) + 1 < 10 ? '0' + (Math.floor(time_left%3600000%60000/1000) + 1) : Math.floor(time_left%3600000%60000/1000) + 1
+        return `${hours}${minutes}:${seconds} left`
+      } else {
+        let minutes = Math.floor(time_left / 60000) + 1;
+        return `${minutes} minutes left`;
+      }
+    }
+  }
+  return 'Passing';
+});
+
+// Return input in HH:MM format
+function formatTime(date: Date): string {
+  let hour = date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
+  let minute = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
+  return `${hour}:${minute}`;
+}
+
+// Return value between 0 and 1 as progress for given block
+function getProgress(block: string): number {
+  const now = time.value;
+  var start = scheduleDictionary.value[block]['start'];
+  var end = scheduleDictionary.value[block]['end'];
+  if (now < start) {
+    return 0;
+  } else if (now > end) {
+    return 1;
+  } else {
+    return (now.getTime() - start.getTime()) / (end.getTime() - start.getTime());
+  }
+}
+
+// Return custom name of block if available
+function getCustomName(block: string) : string {
+  if (block == 'Break') {
+    return holiday.value
+  }
+  if (immersive.value) {
+    if (block.includes('Morning')) {
+      return customImmersiveName.value + ' Morning'
+    } else if (block.includes('Afternoon')) {
+      return customImmersiveName.value + ' Afternoon'
+    }
+  }
+  return customSchedule.value[block] || block;
+}
+
+function getColorCode(color: string): string {
+  if (Object.keys(colorPalette.value).includes(color)) {
+    return colorPalette.value[color];
+  } else {
+    return customColorPalette.value[color];
+  }
+}
+
+// Get schedule given day
+function getDaySchedule(day_input : number) : OtherScheduleType {
+  let now = time.value;
+  var day = now.getDay(),
+      diff = now.getDate() - day + (day == 0 ? -6:day_input);
+  now.setDate(diff)
+
+  let unparsedDaySchedule = {}
+  let done = false;
+
+  for (const start_end of Object.values(holidays)) {
+    if (now > new Date(start_end['start']) && now < new Date(start_end['end'])) {
+      unparsedDaySchedule = {
+        'Break': {
+            'start': {'hour': 0, 'minute': 0},
+            'end': {'hour': 23, 'minute': 59}
+        }
+      }
+      done = true
+    }
+  }
+
+  for (const [date, schedule] of Object.entries(specialSchedules)) {
+    let date_object = new Date(date);
+    if (date_object.getFullYear() == now.getFullYear() && date_object.getMonth() == now.getMonth() && now.getDate() == date_object.getDate()) {
+      unparsedDaySchedule = schedule
+      done = true
+    }
+  }
+
+  if (!done) {
+    if ((now > new Date(immersives['Immersive1']['start']) && now < new Date(immersives['Immersive1']['end'])) || (now > new Date(immersives['Immersive2']['start']) && now < new Date(immersives['Immersive2']['end']))) {
+      unparsedDaySchedule = immersives['Schedule']
+    } else {
+      unparsedDaySchedule = schedule[time.value.getDay()];
+    }
+  }
+
+  return parseScheduleDict(unparsedDaySchedule);
+};
+
+function parseScheduleDict(dict) {
+  let now = time.value
+  let parsedDaySchedule = {}
+  for (const [block, start_end] of Object.entries(dict)) {;
+    parsedDaySchedule[block] = {
+      start: new Date(now.getFullYear(), now.getMonth(), now.getDate(), start_end['start']['hour'], start_end['start']['minute']),
+      end: new Date(now.getFullYear(), now.getMonth(), now.getDate(), start_end['end']['hour'], start_end['end']['minute'])
+    };
+  }
+  return parsedDaySchedule
+}
+
+// Create a copy schedule to preserve original
+watch(scheduleModal, function(val) {
+  if (val) {
+    tempSchedule.value = {
+      'A': customSchedule.value['A'],
+      'B': customSchedule.value['B'],
+      'C': customSchedule.value['C'],
+      'D': customSchedule.value['D'],
+      'E': customSchedule.value['E'],
+      'F': customSchedule.value['F']
+    }
+    tempCustomImmersiveName.value = customImmersiveName.value
+  }
+})
+
+// Set the custom schedule
+function setSchedule() {
+  $q.localStorage.set('custom_blocks', tempSchedule.value)
+  customSchedule.value = tempSchedule.value
+  $q.localStorage.set('custom_immersive_name', tempCustomImmersiveName.value)
+  customImmersiveName.value = tempCustomImmersiveName.value
+  scheduleModal.value = false;
+}
+
+// Reset the schedule
+function resetSchedule() {
+  $q.dialog({
+    title: 'Confirm',
+    message: 'Are you sure you want to reset all settings to their defaults?',
+    cancel: true
+  }).onOk(() => {
+    tempSchedule.value = {
+      'A': 'A',
+      'B': 'B',
+      'C': 'C',
+      'D': 'D',
+      'E': 'E',
+      'F': 'F',
+    }
+    tempCustomImmersiveName.value = 'Immersive'
+  })
+}
+
+function scheduleShake() {
+  if (_.isEqual(tempSchedule.value, customSchedule.value)) {
+    scheduleModal.value = false;
+  } else {
+    $q.notify({
+      message: 'You have unsaved changes!',
+      color: 'negative',
+      position: 'bottom-right',
+      icon: 'close',
+      timeout: 1000,
+      group: false
+    })
+  }
+}
+
+watch(styleModal, function(val) {
+  if (val) {
+    tempBarColor.value = barColor.value
+    tempButtonColors.value = {
+      'Links': buttonColors.value['Links'],
+      'Menu': buttonColors.value['Menu'],
+      'Schedule': buttonColors.value['Schedule'],
+      'Styles': buttonColors.value['Styles'],
+      'Weekly': buttonColors.value['Weekly']
+    }
+  }
+  tempToggles.value = {
+    'Clock': toggles.value['Clock'],
+    'Date': toggles.value['Date'],
+    'Time Left': toggles.value['Time Left'],
+    'Special Schedule Indicator': toggles.value['Special Schedule Indicator']
+  }
+  tempDetailedTime.value = detailedTime.value
+  tempDarkMode.value = darkMode.value
+})
+
+function setStyles() {
+  $q.localStorage.set('bar_color', tempBarColor.value)
+  $q.localStorage.set('button_colors', tempButtonColors.value)
+  $q.localStorage.set('toggles', tempToggles.value)
+  $q.localStorage.set('detailed_time', tempDetailedTime.value)
+  $q.localStorage.set('dark_mode', tempDarkMode.value)
+  barColor.value = tempBarColor.value
+  buttonColors.value = tempButtonColors.value
+  toggles.value = tempToggles.value
+  detailedTime.value = tempDetailedTime.value
+  darkMode.value = tempDarkMode.value
+  $q.dark.set(darkMode.value)
+  styleModal.value = false
+}
+
+function resetStyles() {
+  $q.dialog({
+    title: 'Confirm',
+    message: 'Are you sure you want to reset all settings to their defaults?',
+    cancel: true
+  }).onOk(() => {
+    tempBarColor.value = colors.getPaletteColor('primary');
+    tempButtonColors.value = {
+      'Links': '',
+      'Menu': '',
+      'Schedule': '',
+      'Styles': '',
+      'Weekly': ''
+    }
+    tempToggles.value = {
+      'Clock': true,
+      'Date': true,
+      'Time Left': true,
+      'Special Schedule Indicator': true
+    }
+    tempDetailedTime.value = false
+    tempDarkMode.value = false
+    $q.dark.set(false)
+  })
+}
+
+function stylesShake() {
+  if (_.isEqual(tempBarColor.value, barColor.value) && _.isEqual(tempButtonColors.value, buttonColors.value) && _.isEqual(tempToggles.value, toggles.value) && _.isEqual(tempDetailedTime.value, detailedTime.value)) {
+    styleModal.value = false;
+  } else {
+    $q.notify({
+      message: 'You have unsaved changes!',
+      color: 'negative',
+      position: 'bottom-right',
+      icon: 'close',
+      timeout: 1000,
+      group: false
+    })
+  }
+}
+
+onMounted(() => {
+  if ($q.localStorage.getItem('custom_blocks')) {
+    customSchedule.value = $q.localStorage.getItem('custom_blocks')
+  }
+  if ($q.localStorage.getItem('bar_color')) {
+    barColor.value = $q.localStorage.getItem('bar_color')
+  }
+  if ($q.localStorage.getItem('button_colors')) {
+    buttonColors.value = $q.localStorage.getItem('button_colors')
+  }
+  if ($q.localStorage.getItem('toggles')) {
+    toggles.value = $q.localStorage.getItem('toggles')
+  }
+  if ($q.localStorage.getItem('detailed_time')) {
+    detailedTime.value = $q.localStorage.getItem('detailed_time')
+  }
+  if ($q.localStorage.getItem('dark_mode')) {
+    darkMode.value = $q.localStorage.getItem('dark_mode')
+    $q.dark.set(darkMode.value)
+  }
+  if ($q.localStorage.getItem('custom_immersive_name')) {
+    customImmersiveName.value = $q.localStorage.getItem('custom_immersive_name')
+  }
+})
+
+// Update the time every second
+setInterval(() => {
+  time.value = new Date();
+  document.title = currentBlock.value
+}, 1000);
+</script>
