@@ -15,7 +15,7 @@
     <div v-if="special_schedule && toggles['Special Schedule Indicator']" class="col-auto">
       SPECIAL SCHEDULE
     </div>
-    <div v-if="immersive && toggles['Special Schedule Indicator']" class="col-auto">
+    <div v-else-if="immersive && toggles['Special Schedule Indicator']" class="col-auto">
       IMMERSIVE
     </div>
   </div>
@@ -60,7 +60,7 @@
   <q-dialog v-model="lunchModal">
     <q-card style="width: 900px; max-width: 80vw; height: 80vh;">
     <embed
-      src="src\data\menu\menu.pdf#toolbar=0"
+      src="menu\menu.pdf#toolbar=0"
       type="application/pdf"
       frameBorder="0"
       height="100%"
@@ -306,7 +306,7 @@
     <q-card style="width: 1300px; max-width: 80vw;">
       <div class="row q-ma-sm">
         <div
-          v-for="day in [1, 2, 3, 4, 5]"
+          v-for="day in dayNames"
           :key="day"
           class="col"
         >
@@ -314,15 +314,18 @@
             <h4 class="q-my-none">{{ day }}</h4>
           </div>
           <div
-            v-for="(start_end, block) of getDaySchedule(day)"
+            v-for="(start_end, block) of getDaySchedule(dayNames.indexOf(day) + 1)"
             :key="block"
             :class="['q-px-sm', 'q-ma-sm', 'rounded-borders', 'overflow-auto', 'bg-' + (colorGuide[block] || 'blue-4') ]"
           >
             <p class="text-h6 q-mb-none">
               {{ getCustomName(block) }}
             </p>
-            <p>
+            <p v-if="formatTime(start_end['start']) != '0:00'">
               {{ formatTime(start_end['start']) + ' - ' + formatTime(start_end['end']) }}
+            </p>
+            <p v-else>
+              All Day
             </p>
           </div>
         </div>
@@ -417,7 +420,7 @@ const special_schedule = computed<boolean>(function() { // Special schedule stat
 const holiday = computed<string>(function() { // Holiday state
   let now = time.value
   for (const [name, start_end] of Object.entries(holidays)) {
-    if (now > new Date(start_end['start']) && now < new Date(start_end['end'])) {
+    if (now >= new Date(start_end['start']) && now <= new Date(start_end['end'])) {
       return name
     }
   }
@@ -430,7 +433,7 @@ const immersive = computed<boolean>(function() { // Special schedule state
   }
   return false
 });
-const time = ref<Date>(new Date()); // Current date
+const time = ref<Date>(new Date('2023/1/25')); // Current date
 
 const customSchedule = ref<ScheduleType>({
   A: 'A',
@@ -528,13 +531,14 @@ const tempDarkMode = ref<boolean>(false)
 
 // Useful Links
 const usefulLinks = {
-  'Bay Site': {'link': 'https://www.bayschoolsf.org/', 'image': 'src\\images\\bay_site.png'},
-  'Canvas': {'link': 'https://bayschoolsf.instructure.com/', 'image': 'src\\images\\canvas.png'},
-  'My Bay': {'link': 'https://bayschoolsf.myschoolapp.com/', 'image': 'src\\images\\my_bay.png'},
-  'Announcment Digest': {'link': 'https://docs.google.com/document/d/1c5YzT06GTn5CdX_7X7jZ2Ghhd5pK1aHhRRbOY78cr2M/', 'image': 'src\\images\\announcements.png'},
-  'Bay Map': {'link': 'https://www.google.com/maps/d/edit?mid=1tBNv0IhwXTfDMeIaAX3SkCWVZGjSq5w', 'image': 'src\\images\\bay_map.png'},
-  'Bay Riptide': {'link': 'https://sites.google.com/bayschoolsf.org/the-bay-riptide/', 'image': 'src\\images\\riptide.png'}
+  'Bay Site': {'link': 'https://www.bayschoolsf.org/', 'image': 'images\\bay_site.jpg'},
+  'Canvas': {'link': 'https://bayschoolsf.instructure.com/', 'image': 'images\\canvas.jpg'},
+  'My Bay': {'link': 'https://bayschoolsf.myschoolapp.com/', 'image': 'images\\my_bay.jpg'},
+  'Announcment Digest': {'link': 'https://docs.google.com/document/d/1c5YzT06GTn5CdX_7X7jZ2Ghhd5pK1aHhRRbOY78cr2M/', 'image': 'images\\announcements.jpg'},
+  'Bay Map': {'link': 'https://www.google.com/maps/d/edit?mid=1tBNv0IhwXTfDMeIaAX3SkCWVZGjSq5w', 'image': 'images\\bay_map.jpg'},
+  'Bay Riptide': {'link': 'https://sites.google.com/bayschoolsf.org/the-bay-riptide/', 'image': 'images\\riptide.jpg'}
 }
+const dayNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
 
 function bugReport() {
   $q.dialog({
@@ -643,9 +647,10 @@ function getProgress(block: string): number {
   var start = scheduleDictionary.value[block]['start'];
   var end = scheduleDictionary.value[block]['end'];
   if (now < start) {
-    return 0;
+    return 0
   } else if (now > end) {
-    return 1;
+    console.log(end)
+    return 1
   } else {
     return (now.getTime() - start.getTime()) / (end.getTime() - start.getTime());
   }
@@ -673,7 +678,7 @@ function getColorCode(color: string): string {
 
 // Get schedule given day
 function getDaySchedule(day_input : number) : OtherScheduleType {
-  let now = time.value;
+  let now = new Date(time.value.getTime());
   var day = now.getDay(),
       diff = now.getDate() - day + (day == 0 ? -6:day_input);
   now.setDate(diff)
@@ -682,7 +687,7 @@ function getDaySchedule(day_input : number) : OtherScheduleType {
   let done = false;
 
   for (const start_end of Object.values(holidays)) {
-    if (now > new Date(start_end['start']) && now < new Date(start_end['end'])) {
+    if (now >= new Date(start_end['start']) && now <= new Date(start_end['end'])) {
       unparsedDaySchedule = {
         'Break': {
             'start': {'hour': 0, 'minute': 0},
@@ -886,7 +891,7 @@ onMounted(() => {
 
 // Update the time every second
 setInterval(() => {
-  time.value = new Date();
+  time.value = new Date('2023/1/25');
   document.title = currentBlock.value
 }, 1000);
 </script>
