@@ -52,18 +52,20 @@
     <div class="col-auto q-mx-sm">
       <q-btn :color="getColorCode(buttonColors['Styles'])" label="Customize" @click="styleModal = true" rounded no-caps />
     </div>
-    <div class="col-auto q-mx-sm">
-      <q-btn :color="getColorCode(buttonColors['Weekly'])" label="Weekly Schedule" @click="weekModal = true" rounded no-caps />
+    <div class="col q-mx-sm">
+      <q-btn class="float-right" :color="getColorCode(buttonColors['Weekly'])" label="Weekly Schedule" @click="weekModal = true" rounded no-caps />
     </div>
   </div>
 
   <q-dialog v-model="lunchModal">
-    <q-card style="width: 1300px; max-width: 80vw; height: 80vh;">
-      <q-pdfviewer
-        v-model="lunchModal"
-        src="src\data\menu\menu.pdf"
-        type="html5"
-      />
+    <q-card style="width: 900px; max-width: 80vw; height: 80vh;">
+    <embed
+      src="src\data\menu\menu.pdf#toolbar=0"
+      type="application/pdf"
+      frameBorder="0"
+      height="100%"
+      width="100%"
+    />
     </q-card>
   </q-dialog>
 
@@ -333,28 +335,37 @@
       <q-card-section class="text-h5">
         Useful Links
       </q-card-section>
-      <q-card-section class="q-px-md q-mb-lg row items-start q-gutter-md">
-        <q-card
-          v-for="(link, name) of usefulLinks"
-          :key="name"
-          class="useful-links-card text-weight-thin"
-          :to="link"
+      <q-card-section>
+        <div
+          v-for="index in Math.ceil(Object.keys(usefulLinks).length / 3)"
+          :key="index"
+          class="row q-my-md"
         >
-          <a :href="link" target="_blank">
-            <q-img src="https://images.unsplash.com/photo-1521747116042-5a810fda9664">
-              <div class="absolute-bottom text-subtitle2 text-center">
-                {{ name }}
-              </div>
-            </q-img>
-          </a>
-        </q-card>
+          <div
+            v-for="name of Object.keys(usefulLinks).slice((index - 1) * 3, index * 3)"
+            :key="name"
+            class="col"
+          >
+            <q-card
+              class="useful-links-card text-weight-thin"
+            >
+              <a :href="usefulLinks[name]['link']" target="_blank">
+                <q-img :src="usefulLinks[name]['image']">
+                  <div class="absolute-bottom text-subtitle2 text-center">
+                    {{ name }}
+                  </div>
+                </q-img>
+              </a>
+            </q-card>
+          </div>
+        </div>
       </q-card-section>
     </q-card>
   </q-dialog>
 
   <div class="fixed-bottom text-subtitle1 text-center q-pa-md">
-    <p class="q-ma-none">Coded by <a href="https://lucaskchang.com" target="_blank">Lucas Chang</a></p>
-    <p class="q-mt-sm"><a href="https://github.com/lukajaa/bay-clock-2" target="_blank">Source</a> / Tools / Bug Report</p>
+    <p class="q-ma-none">Created by <a href="https://lucaskchang.com" target="_blank">Lucas Chang</a></p>
+    <p class="q-mt-sm"><a href="https://github.com/lukajaa/bay-clock-2" target="_blank">Source</a> / Tools / <a @click="bugReport">Bug Report</a></p>
   </div>
 </div>
 </template>
@@ -472,7 +483,8 @@ const colorGuide = ref<StringString>({
   'Break': 'green-4'
 })
 
-const lunchModal = ref<boolean>(true); // Lunch menu modal state
+const lunchModal = ref<boolean>(false); // Lunch menu modal state
+const welcomeModal = ref<boolean>(true); // Welcome message modal state
 const scheduleModal = ref<boolean>(false); // Custom schedule modal state
 const styleModal = ref<boolean>(false); // Style modal state
 const styleTab = ref<string>('colors'); // Style tab
@@ -516,12 +528,19 @@ const tempDarkMode = ref<boolean>(false)
 
 // Useful Links
 const usefulLinks = {
-  'Bay Site': 'https://www.bayschoolsf.org/',
-  'Canvas': 'https://bayschoolsf.instructure.com/',
-  'My Bay': 'https://bayschoolsf.myschoolapp.com/',
-  'Announcment Digest': 'https://docs.google.com/document/d/1c5YzT06GTn5CdX_7X7jZ2Ghhd5pK1aHhRRbOY78cr2M/',
-  'Bay Map': 'https://www.google.com/maps/d/edit?mid=1tBNv0IhwXTfDMeIaAX3SkCWVZGjSq5w',
-  'Bay Riptide': 'https://sites.google.com/bayschoolsf.org/the-bay-riptide/'
+  'Bay Site': {'link': 'https://www.bayschoolsf.org/', 'image': 'src\\images\\bay_site.png'},
+  'Canvas': {'link': 'https://bayschoolsf.instructure.com/', 'image': 'src\\images\\canvas.png'},
+  'My Bay': {'link': 'https://bayschoolsf.myschoolapp.com/', 'image': 'src\\images\\my_bay.png'},
+  'Announcment Digest': {'link': 'https://docs.google.com/document/d/1c5YzT06GTn5CdX_7X7jZ2Ghhd5pK1aHhRRbOY78cr2M/', 'image': 'src\\images\\announcements.png'},
+  'Bay Map': {'link': 'https://www.google.com/maps/d/edit?mid=1tBNv0IhwXTfDMeIaAX3SkCWVZGjSq5w', 'image': 'src\\images\\bay_map.png'},
+  'Bay Riptide': {'link': 'https://sites.google.com/bayschoolsf.org/the-bay-riptide/', 'image': 'src\\images\\riptide.png'}
+}
+
+function bugReport() {
+  $q.dialog({
+    title: 'Found a bug or have a suggestion?',
+    message: 'Email: lchang24@bayschoolsf.org'
+  })
 }
 
 // Return the current day's schedule
@@ -634,9 +653,6 @@ function getProgress(block: string): number {
 
 // Return custom name of block if available
 function getCustomName(block: string) : string {
-  if (block == 'Break') {
-    return holiday.value
-  }
   if (immersive.value) {
     if (block.includes('Morning')) {
       return customImmersiveName.value + ' Morning'
