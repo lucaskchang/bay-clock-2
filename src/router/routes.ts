@@ -5,7 +5,10 @@ const routes: RouteRecordRaw[] = [
     path: '/',
     component: () => import('pages/MainPage.vue'),
   },
-  
+  {
+    path: '/timer',
+    component: () => import('pages/TimerPage.vue'),
+  },
   {
     path: '/:catchAll(.*)*',
     component: () => import('pages/404.vue'),

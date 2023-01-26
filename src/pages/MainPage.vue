@@ -40,20 +40,18 @@
   </div>
 
   <div class="row q-ma-lg">
-    <div class="col-auto q-mx-sm">
-      <q-btn :color="getColorCode(buttonColors['Links'])" label="Useful Links" @click="linksModal = true" rounded no-caps />
+    <div class="col">
+      <div class="q-gutter-md">
+        <q-btn :color="getColorCode(buttonColors['Links'])" label="Useful Links" @click="linksModal = true" rounded no-caps />
+        <q-btn :color="getColorCode(buttonColors['Menu'])" label="Lunch Menu" @click="lunchModal = true" rounded no-caps />
+        <q-btn :color="getColorCode(buttonColors['Schedule'])" label="Custom Schedule" @click="scheduleModal = true" rounded no-caps />
+        <q-btn :color="getColorCode(buttonColors['Styles'])" label="Customize" @click="styleModal = true" rounded no-caps />
+      </div>
     </div>
-    <div class="col-auto q-mx-sm">
-      <q-btn :color="getColorCode(buttonColors['Menu'])" label="Lunch Menu" @click="lunchModal = true" rounded no-caps />
-    </div>
-    <div class="col-auto q-mx-sm">
-      <q-btn :color="getColorCode(buttonColors['Schedule'])" label="Custom Schedule" @click="scheduleModal = true" rounded no-caps />
-    </div>
-    <div class="col-auto q-mx-sm">
-      <q-btn :color="getColorCode(buttonColors['Styles'])" label="Customize" @click="styleModal = true" rounded no-caps />
-    </div>
-    <div class="col q-mx-sm">
-      <q-btn class="float-right" :color="getColorCode(buttonColors['Weekly'])" label="Weekly Schedule" @click="weekModal = true" rounded no-caps />
+    <div class="column justify-end">
+      <div class="col">
+        <q-btn :color="getColorCode(buttonColors['Weekly'])" label="Weekly Schedule" @click="weekModal = true" rounded no-caps />
+      </div>
     </div>
   </div>
 
@@ -365,10 +363,42 @@
       </q-card-section>
     </q-card>
   </q-dialog>
+  <q-dialog v-model="toolsModal">
+    <q-card style="width: 965px; max-width: 80vw;">
+      <q-card-section class="text-h5">
+        Useful Links
+      </q-card-section>
+      <q-card-section>
+        <div
+          v-for="index in Math.ceil(Object.keys(toolLinks).length / 3)"
+          :key="index"
+          class="row q-my-md"
+        >
+          <div
+            v-for="name of Object.keys(toolLinks).slice((index - 1) * 3, index * 3)"
+            :key="name"
+            class="col"
+          >
+            <q-card
+              class="useful-links-card text-weight-thin"
+            >
+              <a :href="toolLinks[name]['link']" target="_blank">
+                <q-img :src="toolLinks[name]['image']">
+                  <div class="absolute-bottom text-subtitle2 text-center">
+                    {{ name }}
+                  </div>
+                </q-img>
+              </a>
+            </q-card>
+          </div>
+        </div>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 
-  <div class="fixed-bottom text-subtitle1 text-center q-pa-md">
+  <div class="float-bottom text-subtitle1 text-center q-pa-md q-pt-xl q-mt-xl">
     <p class="q-ma-none">Created by <a href="https://lucaskchang.com" target="_blank">Lucas Chang</a></p>
-    <p class="q-mt-sm"><a href="https://github.com/lukajaa/bay-clock-2" target="_blank">Source</a> / Tools / <a @click="bugReport">Bug Report</a></p>
+    <p class="q-mt-sm"><a href="https://github.com/lukajaa/bay-clock-2" target="_blank">Source</a> / <a @click="toolsModal = true">Tools</a> / <a @click="bugReport">Bug Report</a></p>
   </div>
 </div>
 </template>
@@ -433,7 +463,7 @@ const immersive = computed<boolean>(function() { // Special schedule state
   }
   return false
 });
-const time = ref<Date>(new Date('2023/1/25')); // Current date
+const time = ref<Date>(new Date()); // Current date
 
 const customSchedule = ref<ScheduleType>({
   A: 'A',
@@ -487,6 +517,7 @@ const colorGuide = ref<StringString>({
 })
 
 const lunchModal = ref<boolean>(false); // Lunch menu modal state
+const toolModal = ref<boolean>(false); // Tools modal state
 const welcomeModal = ref<boolean>(true); // Welcome message modal state
 const scheduleModal = ref<boolean>(false); // Custom schedule modal state
 const styleModal = ref<boolean>(false); // Style modal state
@@ -537,6 +568,10 @@ const usefulLinks = {
   'Announcment Digest': {'link': 'https://docs.google.com/document/d/1c5YzT06GTn5CdX_7X7jZ2Ghhd5pK1aHhRRbOY78cr2M/', 'image': 'images\\announcements.jpg'},
   'Bay Map': {'link': 'https://www.google.com/maps/d/edit?mid=1tBNv0IhwXTfDMeIaAX3SkCWVZGjSq5w', 'image': 'images\\bay_map.jpg'},
   'Bay Riptide': {'link': 'https://sites.google.com/bayschoolsf.org/the-bay-riptide/', 'image': 'images\\riptide.jpg'}
+}
+// Tools
+const toolLinks = {
+  'Homework Timers': {'link': '/#/timer', 'image': 'images\\bay_site.jpg'}
 }
 const dayNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
 
@@ -891,7 +926,7 @@ onMounted(() => {
 
 // Update the time every second
 setInterval(() => {
-  time.value = new Date('2023/1/25');
+  time.value = new Date();
   document.title = currentBlock.value
 }, 1000);
 </script>
