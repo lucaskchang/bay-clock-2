@@ -20,23 +20,21 @@
     </div>
   </div>
 
-  <div class="col">
-    <div
-      v-for="(start_end, block) of scheduleDictionary"
-      :key="block"
-      class="row q-ma-xl"
-    >
-        <q-linear-progress :class="[darkMode ? 'bg-dark' : 'bg-grey-3']" size="25px" :color="getColorCode(barColor)" :value="getProgress(block)" style="border-radius: 50px">
-          <div :class="['row', 'justify-between', 'text-subtitle1', 'absolute-full', darkMode ? 'text-grey-4' : 'text-dark']">
-            <div class="col-auto q-ml-sm">
-              {{ getCustomName(block) }}
-            </div>
-            <div class="col-auto q-mr-sm">
-              {{ formatTime(start_end['start']) }} - {{ formatTime(start_end['end']) }}
-            </div>
+  <div
+    v-for="(start_end, block) of scheduleDictionary"
+    :key="block"
+    class="row q-ma-xl"
+  >
+      <q-linear-progress :class="[darkMode ? 'bg-dark' : 'bg-grey-3']" size="25px" :color="getColorCode(barColor)" :value="getProgress(block)" style="border-radius: 50px">
+        <div :class="['row', 'justify-between', 'text-subtitle1', 'absolute-full', darkMode ? 'text-grey-4' : 'text-dark']">
+          <div class="col-auto q-ml-sm">
+            {{ getCustomName(block) }}
           </div>
-        </q-linear-progress>
-    </div>
+          <div class="col-auto q-mr-sm">
+            {{ formatTime(start_end['start']) }} - {{ formatTime(start_end['end']) }}
+          </div>
+        </div>
+      </q-linear-progress>
   </div>
 
   <div class="row q-ma-lg">
@@ -130,16 +128,16 @@
       <q-card-section>
         <div class="row text-center q-ma-sm">
           <div
-            v-for="day of ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']"
+            v-for="day of dayNames"
             :key="day"
             class="col"
           >
-            <h6>{{ day }}</h6>
-            <q-input filled v-model="activitySchedule[day]['start']" mask="time" :rules="['time']">
+            <h6 class="q-my-sm">{{ day }}</h6>
+            <q-input filled v-model="tempActivitySchedule[day]['start']" mask="time">
               <template v-slot:append>
                 <q-icon name="access_time" class="cursor-pointer">
                   <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                    <q-time v-model="time">
+                    <q-time v-model="tempActivitySchedule[day]['start']">
                       <div class="row items-center justify-end">
                         <q-btn v-close-popup label="Close" color="primary" flat />
                       </div>
@@ -149,11 +147,11 @@
               </template>
             </q-input>
             <p>to</p>
-            <q-input filled v-model="time" mask="time" :rules="['time']">
+            <q-input filled v-model="tempActivitySchedule[day]['end']" mask="time">
               <template v-slot:append>
                 <q-icon name="access_time" class="cursor-pointer">
                   <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                    <q-time v-model="time">
+                    <q-time v-model="tempActivitySchedule[day]['end']">
                       <div class="row items-center justify-end">
                         <q-btn v-close-popup label="Close" color="primary" flat />
                       </div>
@@ -166,9 +164,7 @@
         </div>
       </q-card-section>
       <div class="q-pa-lg">
-        <q-btn label="Save" @click="setStyles" color="primary"/>
-        <q-btn label="Reset" @click="resetStyles" color="primary" flat class="q-ml-sm" />
-        <q-btn label="Cancel" @click="styleModal = false" color="negative" flat class="float-right" />
+        <q-btn label="Done" @click="activityModal = false" color="primary"/>
       </div>
     </q-card>
   </q-dialog>
@@ -196,7 +192,6 @@
             <q-tab-panels
               v-model="styleTab"
               animated
-              swipeable
               vertical
               transition-prev="jump-up"
               transition-next="jump-up"
@@ -363,10 +358,11 @@
       </q-card-section>
     </q-card>
   </q-dialog>
+
   <q-dialog v-model="toolsModal">
     <q-card style="width: 965px; max-width: 80vw;">
       <q-card-section class="text-h5">
-        Useful Links
+        Tools
       </q-card-section>
       <q-card-section>
         <div
@@ -382,7 +378,7 @@
             <q-card
               class="useful-links-card text-weight-thin"
             >
-              <a :href="toolLinks[name]['link']" target="_blank">
+              <a :href="toolLinks[name]['link']">
                 <q-img :src="toolLinks[name]['image']">
                   <div class="absolute-bottom text-subtitle2 text-center">
                     {{ name }}
@@ -396,7 +392,7 @@
     </q-card>
   </q-dialog>
 
-  <div class="float-bottom text-subtitle1 text-center q-pa-md q-pt-xl q-mt-xl">
+  <div class="float-bottom text-subtitle1 text-center q-pt-xl q-mt-xl">
     <p class="q-ma-none">Created by <a href="https://lucaskchang.com" target="_blank">Lucas Chang</a></p>
     <p class="q-mt-sm"><a href="https://github.com/lukajaa/bay-clock-2" target="_blank">Source</a> / <a @click="toolsModal = true">Tools</a> / <a @click="bugReport">Bug Report</a></p>
   </div>
@@ -409,6 +405,7 @@ import { useQuasar, colors } from 'quasar';
 import schedule from '../data/schedule.json';
 import immersives from '../data/immersives.json';
 import specialSchedules from '../data/special_schedules.json';
+import activities from '../data/activity_schedule.json';
 import holidays from '../data/holidays.json';
 import colorArray from '../data/colors.json';
 import _ from 'lodash';
@@ -435,6 +432,9 @@ type StringString = {
   [index: string]: string;
 }
 
+
+const activitySchedule = ref(activities);
+const tempActivitySchedule = ref({})
 const $q = useQuasar(); // Quasar instance
 const darkMode = ref<boolean>(false) // Dark mode state
 const special_schedule = computed<boolean>(function() { // Special schedule state
@@ -477,29 +477,6 @@ const tempSchedule = ref<ScheduleType>(customSchedule.value) // Temporary schedu
 const customImmersiveName = ref<string>('Immersive')
 const tempCustomImmersiveName = ref<string>('Immersive')
 
-const activitySchedule = ref({
-  'Monday': {
-    'start': {'hour': 15, 'minute': 45},
-    'end': {'hour': 17, 'minute': 0}
-  },
-  'Tuesday': {
-    'start': {'hour': 15, 'minute': 45},
-    'end': {'hour': 17, 'minute': 0}
-  },
-  'Wednesday': {
-    'start': {'hour': 15, 'minute': 45},
-    'end': {'hour': 17, 'minute': 0}
-  },
-  'Thursday': {
-    'start': {'hour': 15, 'minute': 0},
-    'end': {'hour': 16, 'minute': 30}
-  },
-  'Friday': {
-    'start': {'hour': 14, 'minute': 35},
-    'end': {'hour': 16, 'minute': 0}
-  }
-})
-
 const colorGuide = ref<StringString>({
   A: 'red-4',
   B: 'pink-4',
@@ -517,12 +494,12 @@ const colorGuide = ref<StringString>({
 })
 
 const lunchModal = ref<boolean>(false); // Lunch menu modal state
-const toolModal = ref<boolean>(false); // Tools modal state
+const toolsModal = ref<boolean>(false); // Tools modal state
 const welcomeModal = ref<boolean>(true); // Welcome message modal state
 const scheduleModal = ref<boolean>(false); // Custom schedule modal state
 const styleModal = ref<boolean>(false); // Style modal state
 const styleTab = ref<string>('colors'); // Style tab
-const styleSplitter = ref<number>(10); // Style splitter
+const styleSplitter = ref<number>(25); // Style splitter
 const activityModal = ref<boolean>(false); // Activity Modal State
 const weekModal  = ref<boolean>(false); // Weekly schedule modal state
 const linksModal = ref<boolean>(false); // Useful links modal state
@@ -571,9 +548,9 @@ const usefulLinks = {
 }
 // Tools
 const toolLinks = {
-  'Homework Timers': {'link': '/#/timer', 'image': 'images\\bay_site.jpg'}
+  'Homework Timers': {'link': '/#/timer', 'image': 'images\\timers.jpg'}
 }
-const dayNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']
 
 function bugReport() {
   $q.dialog({
@@ -601,7 +578,13 @@ const scheduleDictionary = computed<OtherScheduleType>(function() {
   } else if ((now > new Date(immersives['Immersive1']['start']) && now < new Date(immersives['Immersive1']['end'])) || (now > new Date(immersives['Immersive2']['start']) && now < new Date(immersives['Immersive2']['end']))) {
     unparsedDaySchedule = immersives['Schedule']
   } else {
-    unparsedDaySchedule = schedule[now.getDay()];
+    unparsedDaySchedule = schedule[now.getDay()]
+    var activity_start = activitySchedule.value[dayNames[now.getDay() - 1]]['start']
+    var activity_end = activitySchedule.value[dayNames[now.getDay() - 1]]['end']
+    unparsedDaySchedule['Activities + Sports/Drama'] = {
+      'start': {'hour': Number(activity_start.split(':')[0]), 'minute': Number(activity_start.split(':')[1])},
+      'end': {'hour': Number(activity_end.split(':')[0]), 'minute': Number(activity_end.split(':')[1])}
+    }
   }
 
   return parseScheduleDict(unparsedDaySchedule);
@@ -722,7 +705,7 @@ function getDaySchedule(day_input : number) : OtherScheduleType {
   let done = false;
 
   for (const start_end of Object.values(holidays)) {
-    if (now >= new Date(start_end['start']) && now <= new Date(start_end['end'])) {
+    if (now >= new Date(start_end['start']) && now < new Date(start_end['end'])) {
       unparsedDaySchedule = {
         'Break': {
             'start': {'hour': 0, 'minute': 0},
@@ -740,7 +723,6 @@ function getDaySchedule(day_input : number) : OtherScheduleType {
       done = true
     }
   }
-
   if (!done) {
     if ((now > new Date(immersives['Immersive1']['start']) && now < new Date(immersives['Immersive1']['end'])) || (now > new Date(immersives['Immersive2']['start']) && now < new Date(immersives['Immersive2']['end']))) {
       unparsedDaySchedule = immersives['Schedule']
@@ -776,6 +758,7 @@ watch(scheduleModal, function(val) {
       'F': customSchedule.value['F']
     }
     tempCustomImmersiveName.value = customImmersiveName.value
+    tempActivitySchedule.value = JSON.parse(JSON.stringify(activitySchedule.value))
   }
 })
 
@@ -785,6 +768,8 @@ function setSchedule() {
   customSchedule.value = tempSchedule.value
   $q.localStorage.set('custom_immersive_name', tempCustomImmersiveName.value)
   customImmersiveName.value = tempCustomImmersiveName.value
+  $q.localStorage.set('custom_activity_schedule', tempActivitySchedule.value)
+  activitySchedule.value = tempActivitySchedule.value
   scheduleModal.value = false;
 }
 
@@ -804,11 +789,33 @@ function resetSchedule() {
       'F': 'F',
     }
     tempCustomImmersiveName.value = 'Immersive'
+    tempActivitySchedule.value = {
+      'Mon': {
+        'start': '15:45',
+        'end': '17:00'
+      },
+      'Tue': {
+        'start': '15:45',
+        'end': '17:00'
+      },
+      'Wed': {
+        'start': '15:45',
+        'end': '17:00'
+      },
+      'Thu': {
+        'start': '15:00',
+        'end': '16:30'
+      },
+      'Fri': {
+        'start': '14:35',
+        'end': '16:00'
+      }
+    }
   })
 }
 
 function scheduleShake() {
-  if (_.isEqual(tempSchedule.value, customSchedule.value)) {
+  if (_.isEqual(tempSchedule.value, customSchedule.value) && _.isEqual(tempCustomImmersiveName.value, customImmersiveName.value) && _.isEqual(tempActivitySchedule.value, activitySchedule.value)) {
     scheduleModal.value = false;
   } else {
     $q.notify({
@@ -885,7 +892,7 @@ function resetStyles() {
 }
 
 function stylesShake() {
-  if (_.isEqual(tempBarColor.value, barColor.value) && _.isEqual(tempButtonColors.value, buttonColors.value) && _.isEqual(tempToggles.value, toggles.value) && _.isEqual(tempDetailedTime.value, detailedTime.value)) {
+  if (_.isEqual(tempBarColor.value, barColor.value) && _.isEqual(tempButtonColors.value, buttonColors.value) && _.isEqual(tempToggles.value, toggles.value) && _.isEqual(tempDetailedTime.value, detailedTime.value) && tempDarkMode.value == darkMode.value) {
     styleModal.value = false;
   } else {
     $q.notify({
@@ -899,6 +906,7 @@ function stylesShake() {
   }
 }
 
+// load local storage
 onMounted(() => {
   if ($q.localStorage.getItem('custom_blocks')) {
     customSchedule.value = $q.localStorage.getItem('custom_blocks')
@@ -921,6 +929,9 @@ onMounted(() => {
   }
   if ($q.localStorage.getItem('custom_immersive_name')) {
     customImmersiveName.value = $q.localStorage.getItem('custom_immersive_name')
+  }
+  if ($q.localStorage.getItem('custom_activity_schedule')) {
+    activitySchedule.value = $q.localStorage.getItem('custom_activity_schedule')
   }
 })
 
