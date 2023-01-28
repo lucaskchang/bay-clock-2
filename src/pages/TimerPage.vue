@@ -26,7 +26,7 @@
     </q-tabs>
   </div>
 
-  <div class="fixed-bottom text-white q-pa-md">
+  <div v-if="pomodoro_state == 'none' && custom_timer_state == 'off'" class="fixed-bottom text-white q-pa-md">
     <a @click="creditsModal = true">Credits</a> / <a href="/#/">Back to Bay Clock</a>
   </div>
 

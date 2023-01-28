@@ -10,20 +10,45 @@
 }
 
 .useful-links-card {
-  width:100%;
   max-width: 300px;
 }
 
-.no-link-style {
-  color: #d3d3d3;
+.modal-card {
+  width: 900px;
+  max-width: 80vw;
+}
+
+.footer-link {
+  color: #01010a;
   text-decoration: none;
 }
 
-html {
-  overflow: scroll;
+.holiday-icon {
+  opacity: 0.9;
+  pointer-events: none;
+  width: var(--size);
+  height: var(--size);
+  position: absolute;
+  top: -5vh;
+  pointer-events: none;
 }
 
-::-webkit-scrollbar {
-    width: 0px;
-    background: transparent; /* make scrollbar transparent */
+@keyframes snowfall {
+  0% {
+    transform: translate3d(var(--left-ini), 0, 0);
+  }
+  100% {
+    transform: translate3d(var(--left-end), 100vh, 0);
+  }
+}
+
+@for $i from 1 through 50 {
+  .holiday-icon:nth-child(#{$i}) {
+    --size: #{random(3) + 2}rem;
+    --left-ini: #{random(20) - 10}vw;
+    --left-end: #{random(20) - 10}vw;
+    left: #{random(100)}vw;
+    animation: snowfall #{5 + random(10)}s linear infinite;
+    animation-delay: -#{random(10)}s;
+  }
 }

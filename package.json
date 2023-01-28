@@ -15,7 +15,6 @@
     "@quasar/cli": "^2.0.0",
     "@quasar/extras": "^1.0.0",
     "lodash": "^4.17.21",
-    "push-dir": "^0.4.1",
     "quasar": "^2.6.0",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0"
