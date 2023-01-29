@@ -1,6 +1,6 @@
-[
-    {},
-    {
+{
+    "Sun": {},
+    "Mon": {
         "Morning Meeting": {
             "start": {"hour": 8, "minute": 30},
             "end": {"hour": 8, "minute": 50}
@@ -30,7 +30,7 @@
             "end": {"hour": 15, "minute": 35}
         }
     },
-    {
+    "Tue": {
         "Group Advisory/1-on-1s": {
             "start": {"hour": 8, "minute": 30},
             "end": {"hour": 8, "minute": 50}
@@ -60,7 +60,7 @@
             "end": {"hour": 15, "minute": 35}
         }
     },
-    {
+    "Wed": {
         "Morning Meeting": {
             "start": {"hour": 8, "minute": 30},
             "end": {"hour": 8, "minute": 50}
@@ -90,7 +90,7 @@
             "end": {"hour": 15, "minute": 35}
         }
     },
-    {
+    "Thu": {
         "Group Advisory/1-on-1s": {
             "start": {"hour": 8, "minute": 30},
             "end": {"hour": 8, "minute": 50}
@@ -116,7 +116,7 @@
             "end": {"hour": 14, "minute": 55}
         }
     },
-    {
+    "Fri": {
         "Morning Meeting": {
             "start": {"hour": 8, "minute": 30},
             "end": {"hour": 8, "minute": 50}
@@ -138,5 +138,5 @@
             "end": {"hour": 14, "minute": 25}
         }
     },
-    {}
-]
+    "Sat": {}
+}
