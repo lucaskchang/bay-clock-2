@@ -1,17 +1,21 @@
-import { RouteRecordRaw } from 'vue-router';
+import { RouteRecordRaw } from "vue-router";
 
 const routes: RouteRecordRaw[] = [
   {
-    path: '/',
-    component: () => import('pages/MainPage.vue'),
+    path: "/",
+    component: () => import("pages/MainPage.vue"),
   },
   {
-    path: '/timer',
-    component: () => import('pages/TimerPage.vue'),
+    path: "/timer",
+    component: () => import("pages/TimerPage.vue"),
   },
   {
-    path: '/:catchAll(.*)*',
-    component: () => import('pages/404.vue'),
+    path: "/schedule",
+    component: () => import("pages/SchedulePage.vue"),
+  },
+  {
+    path: "/:catchAll(.*)*",
+    component: () => import("pages/404.vue"),
   },
 ];
 

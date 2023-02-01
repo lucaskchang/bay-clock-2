@@ -457,14 +457,23 @@
       </q-card>
     </q-dialog>
 
+
+
     <!-- footer -->
     <div class="float-bottom text-subtitle1 text-center q-pt-xl q-mt-xl">
-      <p class="q-ma-none q-mt-xl q-mp-xl">
+      <p
+        :class="[
+          'q-ma-none',
+          'q-mt-xl',
+          'q-mp-xl',
+          darkMode ? 'text-grey-4' : 'text-dark',
+        ]"
+      >
         Created by <a href="https://lucaskchang.com" target="_blank">Lucas Chang</a>
       </p>
-      <p class="q-mt-sm">
+      <p :class="['q-mt-sm', darkMode ? 'text-grey-4' : 'text-dark']">
         <a
-          class="footer-link"
+          :class="['footer-link', darkMode ? 'text-grey-4' : 'text-dark']"
           href="https://github.com/lukajaa/bay-clock-2"
           target="_blank"
           >Source Code</a
@@ -720,19 +729,10 @@ const scheduleDictionary = computed<ParsedScheduleType>(function () {
   ) {
     unparsedDaySchedule = immersives["Schedule"];
   } else {
-    unparsedDaySchedule = Object.values(schedule)[now.getDay()];
-    var activity_start = activitySchedule.value[dayNames[now.getDay() - 1]]["start"];
-    var activity_end = activitySchedule.value[dayNames[now.getDay() - 1]]["end"];
-    unparsedDaySchedule["Activities + Sports/Drama"] = {
-      start: {
-        hour: Number(activity_start.split(":")[0]),
-        minute: Number(activity_start.split(":")[1]),
-      },
-      end: {
-        hour: Number(activity_end.split(":")[0]),
-        minute: Number(activity_end.split(":")[1]),
-      },
-    };
+    unparsedDaySchedule = appendActivities(
+      Object.values(schedule)[now.getDay()],
+      now.getDay()
+    );
   }
 
   return parseScheduleDict(unparsedDaySchedule);
@@ -804,6 +804,26 @@ const currentBlock = computed<string>(function () {
 
 // FUNCTIONS
 
+// returns schedule with activities appended
+function appendActivities(
+  schedule: UnparsedScheduleType,
+  day: number
+): UnparsedScheduleType {
+  var activity_start = activitySchedule.value[dayNames[day - 1]]["start"];
+  var activity_end = activitySchedule.value[dayNames[day - 1]]["end"];
+  schedule["Activities + Sports/Drama"] = {
+    start: {
+      hour: Number(activity_start.split(":")[0]),
+      minute: Number(activity_start.split(":")[1]),
+    },
+    end: {
+      hour: Number(activity_end.split(":")[0]),
+      minute: Number(activity_end.split(":")[1]),
+    },
+  };
+  return schedule;
+}
+
 // returns date in HH:MM format
 function formatTime(date: Date): string {
   var hour = date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
@@ -842,7 +862,7 @@ function getCustomName(block: string): string {
 function getDaySchedule(day_input: number): ParsedScheduleType {
   var now = new Date(time.value.getTime());
   var day = now.getDay(),
-    diff = now.getDate() - day + (day == 0 ? -6 : day_input);
+    diff = now.getDate() - day + (day == 0 ? -(6 - day_input) : day_input);
   now.setDate(diff);
 
   var unparsedDaySchedule = <UnparsedScheduleType>{};
@@ -879,7 +899,10 @@ function getDaySchedule(day_input: number): ParsedScheduleType {
     ) {
       unparsedDaySchedule = immersives["Schedule"];
     } else {
-      unparsedDaySchedule = Object.values(schedule)[time.value.getDay()];
+      unparsedDaySchedule = appendActivities(
+        Object.values(schedule)[now.getDay()],
+        now.getDay()
+      );
     }
   }
 
@@ -1148,7 +1171,7 @@ onMounted(() => {
 
 // update time and title every second
 setInterval(() => {
-  time.value = new Date();
+  time.value = new Date("2023/1/30");
   document.title = currentBlock.value;
 }, 1000);
 </script>
