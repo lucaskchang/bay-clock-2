@@ -1,3 +1,4 @@
 {
-  "Homework Timers": {"link": "/#/timer", "image": "images\\timers.jpg"}
+  "Homework Timers": {"link": "/#/timer", "image": "images\\timers.jpg"},
+  "Schedule Maker": {"link": "/#/schedule", "image": "images\\schedule.jpg"}
 }

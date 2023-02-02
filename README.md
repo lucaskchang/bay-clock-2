@@ -19,6 +19,7 @@ Made with [Vue3](https://vuejs.org/), [Quasar](https://quasar.dev/), and [Typesc
 - Lots and Lots of Customizable Styles (over 150 colors)!
 - Homework Timers
 - Weekly Schedule
+- Schedule Maker and Printer
 - Dark Mode
 
 ## Maintaining

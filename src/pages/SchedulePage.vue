@@ -55,7 +55,12 @@
     </div>
     <q-btn class="q-my-sm" color="blue" label="Print" v-print="'#schedule'" />
     <div class="bg-red-6 q-pa-sm rounded-borders text-white text-subtitle1">
-      <p>Getting the printer to print with color can be a bit difficult. In your print settings, under "More Settings" try enabling "Background Graphics". If you still can't see color in the preview, you can try to save it as a pdf and then print it after that.</p>
+      <p>
+        Getting the printer to print with color can be a bit difficult. In your print
+        settings, under "More Settings" try enabling "Background Graphics". If you still
+        can't see color in the preview, you can try to save it as a pdf and then print it
+        after that.
+      </p>
     </div>
     <h4 class="q-my-sm">Schedule Preview:</h4>
     <div class="row" id="schedule">
@@ -106,17 +111,23 @@
         </div>
       </div>
     </div>
+    <div class="float-bottom q-pa-md text-center">
+      <a href="/#/">Back to Bay Clock</a>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
 import { useQuasar } from "quasar";
-import colorPalette from "../data/guides/color_palette.json";
-import schedule from "../data/schedules/schedule.json";
+import color_palette from "../data/guides/color_palette.json";
+import schedule_json from "../data/schedules/schedule.json";
 import vPrint from "vue3-print-nb";
 
-const customBlockNames = ref({
+const schedule: ScheduleJsonType = schedule_json;
+const colorPalette: StringString = color_palette;
+
+const customBlockNames = ref<StringString>({
   A: "A",
   B: "B",
   C: "C",
@@ -124,7 +135,7 @@ const customBlockNames = ref({
   E: "E",
   F: "F",
 });
-const customBlockColors = ref({
+const customBlockColors = ref<StringString>({
   A: "#e57373",
   B: "#f06292",
   C: "#64b5f6",
@@ -138,12 +149,13 @@ const customBlockColors = ref({
 });
 const $q = useQuasar();
 
-const center = ref(true);
-const fullNames = ref(false);
+const center = ref<boolean>(true);
+const fullNames = ref<boolean>(false);
 
 function useSavedValues() {
-  if ($q.localStorage.getItem("custom_blocks")) {
-    customBlockNames.value = $q.localStorage.getItem("custom_blocks");
+  var check_custom_blocks = <ScheduleType>$q.localStorage.getItem("custom_blocks");
+  if (check_custom_blocks) {
+    customBlockNames.value = check_custom_blocks;
   }
 }
 
@@ -156,11 +168,11 @@ function distance(start_end) {
 }
 
 const dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri"];
-const fullDayNames = {
-  "Mon": "Monday",
-  "Tue": "Tuesday",
-  "Wed": "Wednesday",
-  "Thu": "Thursday",
-  "Fri": "Friday"
-}
+const fullDayNames = <StringString>{
+  Mon: "Monday",
+  Tue: "Tuesday",
+  Wed: "Wednesday",
+  Thu: "Thursday",
+  Fri: "Friday",
+};
 </script>

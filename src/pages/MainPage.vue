@@ -457,7 +457,87 @@
       </q-card>
     </q-dialog>
 
+    <!-- welcome message -->
+    <q-dialog v-if="!hideWelcomeMenu" v-model="welcomeMenu">
+      <q-card style="width: 965px; max-width: 90vw">
+        <q-card-section class="text-h3 text-center">
+          🎉New Year, New Bay Clock🎉
+        </q-card-section>
+        <q-card-section class="text-body1">
+          <h5 class="q-my-md">💭 Introduction</h5>
+          It might be a bit late to call it a new year, but I'm still writing 2022 on all
+          my papers so it basically counts. Bay Clock 2 is a total rewrite of the original
+          and it adds a bunch of new features. There are probably still some bugs. Email
+          me if you find any.
+          <div class="row">
+            <div class="col">
+              <h5 class="q-my-md">🔧 Improvements</h5>
+              <p>🔗 Useful links dropdown --> Links dashboard</p>
+              <p>🎨 15 colors --> 175 Colors</p>
+              <p>🔘 One color for all buttons --> Individual button colors</p>
+              <p>😌 My 10th grade civics project is no longer hosted on Bay Clock</p>
+            </div>
+            <div class="col">
+              <h5 class="q-my-md">➕ New Features</h5>
+              <p>🏫 Custom immersives names</p>
+              <p>🌙 Dark mode</p>
+              <p>📅 Weekly schedule</p>
+              <p>⏲️ Homework timers</p>
+              <p>🖨️ Printable weekly schedule</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <h5 class="q-my-md">🐛 Bug Fixes</h5>
+              <p>🔆 Button colors work (I guess they just didn't before??)</p>
+              <p>🛏️ Schedule should update when left open overnight</p>
+            </div>
+            <div class="col">
+              <h5 class="q-my-md">🖥️ Code Improvements</h5>
+              <p>✍️ Complete rewrite of code</p>
+              <p>👍 Upgraded to Vue3</p>
+              <p>💪 Used Quasar instead of Buefy</p>
+              <p>😊 Typescript</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <h5 class="q-my-md">👀 Future updates</h5>
+              <p>🧾 Fully customizable schedule</p>
+              <p>🌭 Custom useful links</p>
+              <p>😮 Bay Clock app?!?!?!</p>
+            </div>
+            <div class="col">
+              <h5 class="q-my-md">😡 Feedback</h5>
+              <p>If you have feedback email lchang24@bayschoolsf.org.</p>
+              <p>
+                If you really enjoy using the original Bay Clock more you can view it at
+                https://lukajaa.github.io/clock/. However, special schedules and breaks
+                will not be updated.
+              </p>
+            </div>
+          </div>
+        </q-card-section>
+        <q-card-section>
+          <q-btn label="Done" @click="welcomeMenu = false" color="primary" />
+          <q-checkbox v-model="hideWelcomeMenu" label="Don't show again" />
+        </q-card-section>
+      </q-card>
+    </q-dialog>
 
+    <!-- credits message -->
+    <q-dialog v-model="creditsMenu">
+      <q-card style="width: 500px; max-width: 90vw">
+        <q-card-section class="text-h4"> Credits </q-card-section>
+        <q-card-section class="text-body1">
+          <p>Aidan Brown and Jude Swagel: Original idea and design</p>
+          <p>
+            Sean Kuwamoto, Tate Rowney, and Jaiden Grimminck: Making fun of my code so I
+            remade it
+          </p>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
 
     <!-- footer -->
     <div class="float-bottom text-subtitle1 text-center q-pt-xl q-mt-xl">
@@ -479,10 +559,12 @@
           >Source Code</a
         >
         / <a class="cursor-pointer" @click="toolsMenu = true">Tools</a> /
-        <a class="cursor-pointer" @click="bugReport">Bug Report</a>
+        <a class="cursor-pointer" @click="bugReport">Bug Report</a> /
+        <a class="cursor-pointer" @click="creditsMenu = true">Credits</a>
       </p>
     </div>
 
+    <!-- holiday floating icons -->
     <div v-if="holiday != '' && holidayBool" class="aboslute-center">
       <img
         v-for="index in 50"
@@ -522,69 +604,6 @@ const holidays: SimpleScheduleType = holidays_json;
 const usefulLinks: LinksType = useful_links;
 const toolLinks: LinksType = tool_links;
 
-// TYPES
-type ScheduleJsonType = {
-  [index: string]: UnparsedScheduleType;
-};
-
-type ImmersiveScheduleType = {
-  Immersive1: {
-    start: string;
-    end: string;
-  };
-  Immersive2: {
-    start: string;
-    end: string;
-  };
-  Schedule: UnparsedScheduleType;
-};
-type SimpleScheduleType = {
-  [index: string]: {
-    start: string;
-    end: string;
-    icon?: string;
-  };
-};
-type LinksType = {
-  [index: string]: {
-    link: string;
-    image: string;
-  };
-};
-type ScheduleType = {
-  [index: string]: string;
-  A: string;
-  B: string;
-  C: string;
-  D: string;
-  E: string;
-  F: string;
-};
-type UnparsedScheduleType = {
-  [index: string]: {
-    start: { hour: number; minute: number };
-    end: { hour: number; minute: number };
-  };
-};
-type ParsedScheduleType = {
-  [index: string]: {
-    start: Date;
-    end: Date;
-  };
-};
-type ActivitySchedule = {
-  [index: string]: {
-    start: string;
-    end: string;
-  };
-};
-type ToggleDict = {
-  [index: string]: boolean;
-};
-type StringString = {
-  [index: string]: string;
-};
-
 // VARS
 const $q = useQuasar(); // quasar instance
 const dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri"];
@@ -598,12 +617,14 @@ const lunchMenu = ref<boolean>(false);
 const toolsMenu = ref<boolean>(false);
 const welcomeMenu = ref<boolean>(true);
 const scheduleMenu = ref<boolean>(false);
+const hideWelcomeMenu = ref<boolean>(false);
 const styleMenu = ref<boolean>(false);
 const styleTab = ref<string>("colors");
 const styleSplitter = ref<number>(25);
 const activityMenu = ref<boolean>(false);
 const weekMenu = ref<boolean>(false);
 const linksMenu = ref<boolean>(false);
+const creditsMenu = ref<boolean>(false);
 
 // custom schedule menu values and temp values
 const activitySchedule = ref<ActivitySchedule>(activities);
@@ -1124,6 +1145,11 @@ watch(holidayBool, (state: boolean) => {
   $q.localStorage.set("holiday_bool", state);
 });
 
+// saves holiday icon preferenecs to local storage when changed
+watch(hideWelcomeMenu, (state: boolean) => {
+  $q.localStorage.set("hide_welcome_menu", state);
+});
+
 // load local storage once mounted
 onMounted(() => {
   var check_custom_blocks = <ScheduleType>$q.localStorage.getItem("custom_blocks");
@@ -1167,11 +1193,15 @@ onMounted(() => {
   if (check_holiday_bool) {
     holidayBool.value = check_holiday_bool;
   }
+  var check_hide_welcome_menu = <boolean>$q.localStorage.getItem("hide_welcome_menu");
+  if (check_hide_welcome_menu) {
+    hideWelcomeMenu.value = check_hide_welcome_menu;
+  }
 });
 
 // update time and title every second
 setInterval(() => {
-  time.value = new Date("2023/1/30");
+  time.value = new Date();
   document.title = currentBlock.value;
 }, 1000);
 </script>
