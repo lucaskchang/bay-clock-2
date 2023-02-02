@@ -3,18 +3,18 @@
     "Mon": {
         "Morning Meeting": {
             "start": {"hour": 8, "minute": 30},
-            "end": {"hour": 8, "minute": 50}
+            "end": {"hour": 8, "minute": 55}
         },
         "A": {
-            "start": {"hour": 8, "minute": 55},
-            "end": {"hour": 10, "minute": 10}
+            "start": {"hour": 9, "minute": 0},
+            "end": {"hour": 10, "minute": 15}
         },
         "B": {
-            "start": {"hour": 10, "minute": 15},
-            "end": {"hour": 11, "minute": 30}
+            "start": {"hour": 10, "minute": 20},
+            "end": {"hour": 11, "minute": 35}
         },
         "Lunch": {
-            "start": {"hour": 11, "minute": 30},
+            "start": {"hour": 11, "minute": 35},
             "end": {"hour": 12, "minute": 30}
         },
         "C": {
@@ -33,15 +33,15 @@
     "Tue": {
         "Group Advisory/1-on-1s": {
             "start": {"hour": 8, "minute": 30},
-            "end": {"hour": 8, "minute": 50}
+            "end": {"hour": 8, "minute": 55}
         },
         "E": {
-            "start": {"hour": 8, "minute": 55},
-            "end": {"hour": 10, "minute": 10}
+            "start": {"hour": 9, "minute": 0},
+            "end": {"hour": 10, "minute": 15}
         },
         "F": {
-            "start": {"hour": 10, "minute": 15},
-            "end": {"hour": 11, "minute": 30}
+            "start": {"hour": 10, "minute": 20},
+            "end": {"hour": 11, "minute": 35}
         },
         "Lunch": {
             "start": {"hour": 11, "minute": 30},
@@ -63,15 +63,15 @@
     "Wed": {
         "Morning Meeting": {
             "start": {"hour": 8, "minute": 30},
-            "end": {"hour": 8, "minute": 50}
+            "end": {"hour": 8, "minute": 55}
         },
         "C": {
-            "start": {"hour": 8, "minute": 55},
-            "end": {"hour": 10, "minute": 10}
+            "start": {"hour": 9, "minute": 0},
+            "end": {"hour": 10, "minute": 15}
         },
         "D": {
-            "start": {"hour": 10, "minute": 15},
-            "end": {"hour": 11, "minute": 30}
+            "start": {"hour": 10, "minute": 20},
+            "end": {"hour": 11, "minute": 35}
         },
         "Lunch": {
             "start": {"hour": 11, "minute": 30},
@@ -93,49 +93,49 @@
     "Thu": {
         "Group Advisory/1-on-1s": {
             "start": {"hour": 8, "minute": 30},
-            "end": {"hour": 8, "minute": 50}
+            "end": {"hour": 8, "minute": 55}
         },
         "B": {
-            "start": {"hour": 8, "minute": 55},
-            "end": {"hour": 10, "minute": 25}
+            "start": {"hour": 9, "minute": 0},
+            "end": {"hour": 10, "minute": 30}
         },
         "A": {
-            "start": {"hour": 10, "minute": 35},
-            "end": {"hour": 12, "minute": 5}
+            "start": {"hour": 10, "minute": 40},
+            "end": {"hour": 12, "minute": 10}
         },
         "Lunch": {
-            "start": {"hour": 12, "minute": 5},
-            "end": {"hour": 12, "minute": 55}
+            "start": {"hour": 12, "minute": 10},
+            "end": {"hour": 13, "minute": 0}
         },
         "C": {
-            "start": {"hour": 12, "minute": 55},
-            "end": {"hour": 14, "minute": 25}
+            "start": {"hour": 13, "minute": 0},
+            "end": {"hour": 14, "minute": 30}
         },
         "Tutorial": {
-            "start": {"hour": 14, "minute": 25},
-            "end": {"hour": 14, "minute": 55}
+            "start": {"hour": 14, "minute": 30},
+            "end": {"hour": 15, "minute": 0}
         }
     },
     "Fri": {
         "Morning Meeting": {
             "start": {"hour": 8, "minute": 30},
-            "end": {"hour": 8, "minute": 50}
+            "end": {"hour": 8, "minute": 55}
         },
         "D": {
-            "start": {"hour": 8, "minute": 55},
-            "end": {"hour": 10, "minute": 25}
+            "start": {"hour": 9, "minute": 0},
+            "end": {"hour": 10, "minute": 30}
         },
         "F": {
-            "start": {"hour": 10, "minute": 35},
-            "end": {"hour": 12, "minute": 5}
+            "start": {"hour": 10, "minute": 40},
+            "end": {"hour": 12, "minute": 10}
         },
         "Lunch": {
-            "start": {"hour": 12, "minute": 5},
-            "end": {"hour": 12, "minute": 55}
+            "start": {"hour": 12, "minute": 10},
+            "end": {"hour": 13, "minute": 0}
         },
         "E": {
-            "start": {"hour": 12, "minute": 55},
-            "end": {"hour": 14, "minute": 25}
+            "start": {"hour": 13, "minute": 0},
+            "end": {"hour": 14, "minute": 30}
         }
     },
     "Sat": {}
