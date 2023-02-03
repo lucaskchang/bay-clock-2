@@ -810,9 +810,9 @@ const currentBlock = computed<string>(function () {
             ? "0" + Math.floor((time_left % 3600000) / 60000)
             : Math.floor((time_left % 3600000) / 60000);
         let seconds =
-          Math.floor(((time_left % 3600000) % 60000) / 1000) + 1 < 10
-            ? "0" + (Math.floor(((time_left % 3600000) % 60000) / 1000) + 1)
-            : Math.floor(((time_left % 3600000) % 60000) / 1000) + 1;
+          Math.floor(((time_left % 3600000) % 60000) / 1000) < 10
+            ? "0" + Math.floor(((time_left % 3600000) % 60000) / 1000)
+            : Math.floor(((time_left % 3600000) % 60000) / 1000);
         return `${hours}${minutes}:${seconds} left`;
       } else {
         let minutes = Math.floor(time_left / 60000) + 1;
