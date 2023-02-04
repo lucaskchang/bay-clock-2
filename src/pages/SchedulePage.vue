@@ -111,22 +111,35 @@
         </div>
       </div>
     </div>
-    <div class="float-bottom q-pa-md text-center">
-      <a href="/#/">Back to Bay Clock</a>
-    </div>
+    <BackButton />
   </div>
 </template>
 
 <script setup lang="ts">
+// IMPORTS
 import { ref } from "vue";
 import { useQuasar } from "quasar";
 import color_palette from "../data/guides/color_palette.json";
 import schedule_json from "../data/schedules/schedule.json";
 import vPrint from "vue3-print-nb";
+// components
+import BackButton from "../components/BackButton.vue";
 
 const schedule: ScheduleJsonType = schedule_json;
 const colorPalette: StringString = color_palette;
 
+// VARS
+const $q = useQuasar();
+const dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri"];
+const fullDayNames = <StringString>{
+  Mon: "Monday",
+  Tue: "Tuesday",
+  Wed: "Wednesday",
+  Thu: "Thursday",
+  Fri: "Friday",
+};
+
+// REFS
 const customBlockNames = ref<StringString>({
   A: "A",
   B: "B",
@@ -147,11 +160,10 @@ const customBlockColors = ref<StringString>({
   Tutorial: "#dce775",
   Lunch: "#ff8a65",
 });
-const $q = useQuasar();
-
 const center = ref<boolean>(true);
 const fullNames = ref<boolean>(false);
 
+// FUNCTIONS
 function useSavedValues() {
   var check_custom_blocks = <ScheduleType>$q.localStorage.getItem("custom_blocks");
   if (check_custom_blocks) {
@@ -166,13 +178,4 @@ function distance(start_end) {
 
   return minutes > 70 ? minutes : 70;
 }
-
-const dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri"];
-const fullDayNames = <StringString>{
-  Mon: "Monday",
-  Tue: "Tuesday",
-  Wed: "Wednesday",
-  Thu: "Thursday",
-  Fri: "Friday",
-};
 </script>

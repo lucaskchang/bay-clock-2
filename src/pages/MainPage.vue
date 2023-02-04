@@ -536,43 +536,12 @@
               >https://github.com/lukajaa/bay-clock-2</a
             >
           </p>
-          <h5 class="q-my-sm">2.0.1 - 2/3/2023</h5>
-          <p class="q-my-none">- MIT license</p>
-          <p class="q-my-none">- Added changelog</p>
-          <p class="q-my-none">- Fixed lunch menu</p>
-          <p class="q-my-none">- Added feedback form</p>
-          <h5 class="q-my-sm">2.0 - 2/2/2023</h5>
-          <p class="q-my-none">- 150+ more colors</p>
-          <p class="q-my-none">- Links Dashboard</p>
-          <p class="q-my-none">- Individual button colors</p>
-          <p class="q-my-none">- Removed /civics and /superidol</p>
-          <p class="q-my-none">- Custom immersive names</p>
-          <p class="q-my-none">- Dark mode</p>
-          <p class="q-my-none">- Weekly schedule</p>
-          <p class="q-my-none">- Homework timers</p>
-          <p class="q-my-none">- Printable schedule maker</p>
-          <p class="q-my-none">- Fixed button colors not working</p>
-          <p class="q-my-none">- Fixed bug where schedule would not update over night</p>
-          <p class="q-my-none">- Upgraded to Vue3</p>
-          <p class="q-my-none">- Switched from buefy to quasar</p>
-          <p class="q-my-none">- Switched to typescript</p>
-          <h5 class="q-my-sm">1.0 - 10/16/21</h5>
-          <p class="q-my-none">- Coded in Vue2</p>
-          <p class="q-my-none">- Simple customization options</p>
-          <p class="q-my-none">- Useful links and lunch menu</p>
-          <p class="q-my-none">
-            Hosted at
-            <a href="https://lukajaa.github.io/clock/"
-              >https://lukajaa.github.io/clock/</a
-            >
-          </p>
-          <h5 class="q-my-sm">Pre 1.0 - 9/26/21</h5>
-          <p>
-            Simple HTML site hosted at
-            <a href="https://lukajaa.github.io/bay-clock/"
-              >https://lukajaa.github.io/bay-clock/</a
-            >
-          </p>
+          <div v-for="(info, version) of changelog" :key="version">
+            <h5 class="q-my-sm">{{ version }} - {{ info["date"] }}</h5>
+            <p v-for="change of info['changes']" :key="change" class="q-my-none">
+              - {{ change }}
+            </p>
+          </div>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -638,6 +607,7 @@ import color_palette from "../data/guides/color_palette.json";
 import holidays_json from "../data/schedules/holidays.json";
 import useful_links from "../data/guides/useful_links.json";
 import tool_links from "../data/guides/tool_links.json";
+import changelog_json from "../data/changelog.json";
 // schedules
 const immersives: ImmersiveScheduleType = immersives_json;
 const schedule: ScheduleJsonType = schedule_json;
@@ -650,6 +620,7 @@ const colorPalette: StringString = color_palette;
 const holidays: SimpleScheduleType = holidays_json;
 const usefulLinks: LinksType = useful_links;
 const toolLinks: LinksType = tool_links;
+const changelog: ChangelogType = changelog_json;
 
 // VARS
 const $q = useQuasar(); // quasar instance

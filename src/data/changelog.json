@@ -1,0 +1,47 @@
+{
+  "2.0.1" : {
+    "date": "2/3/23",
+    "changes": [
+      "MIT license",
+      "Added changelog",
+      "Fixed lunch menu",
+      "Added feedback form",
+      "Back to Bay Clock button component",
+      "Schedule page and timer page documentation"
+    ]
+  },
+  "2.0" : {
+    "date": "2/2/23",
+    "changes": [
+      "150+ more colors",
+      "Links Dashboard",
+      "Individual button colors",
+      "Removed /civics and /superidol",
+      "Custom immersive names",
+      "Dark mode",
+      "Weekly schedule",
+      "Homework timers",
+      "Printable schedule maker",
+      "Fixed button colors not working",
+      "Fixed bug where schedule would not update over night",
+      "Upgraded to Vue3",
+      "Switched from buefy to quasar",
+      "Switched to typescript"
+    ]
+  },
+  "1.0" : {
+    "date": "10/16/21",
+    "changes": [
+      "Coded in Vue2",
+      "Simple customization options",
+      "Useful links and lunch menu",
+      "Hosted at https://lukajaa.github.io/clock/"
+    ]
+  },
+  "Pre 1.0" : {
+    "date": "9/26/2021",
+    "changes": [
+      "Simple HTML site hosted at https://lukajaa.github.io/bay-clock/"
+    ]
+  }
+}

@@ -60,7 +60,7 @@
       v-if="pomodoro_state == 'none' && custom_timer_state == 'off'"
       class="fixed-bottom text-white q-pa-md"
     >
-      <a @click="creditsModal = true">Credits</a> / <a href="/#/">Back to Bay Clock</a>
+      <a @click="creditsModal = true">Credits</a>
     </div>
 
     <q-dialog v-model="creditsModal">
@@ -81,12 +81,17 @@
         </q-card-section>
       </q-card>
     </q-dialog>
+    <BackButton v-if="pomodoro_state == 'none' && custom_timer_state == 'off'" />
   </div>
 </template>
 
 <script setup lang="ts">
+// IMPORTS
 import { ref } from "vue";
+// components
+import BackButton from "../components/BackButton.vue";
 
+// REFS
 const tab = ref<string>("pomodoro");
 const pomodoro_timer = ref<string>("25:00");
 const pomodoro_state = ref<string>("none");
@@ -95,9 +100,9 @@ const custom_timer = ref<number>(25);
 const custom_timer_state = ref<string>("off");
 const course = ref<string>("");
 const time_left = ref<number>(0);
-
 const creditsModal = ref<boolean>(false);
 
+// FUNCTIONS
 function start_pomodoro() {
   pomodoro_state.value = "work";
   time_left.value = 1500;
