@@ -525,6 +525,58 @@
       </q-card>
     </q-dialog>
 
+    <!-- code + changelog message -->
+    <q-dialog v-model="codeMenu">
+      <q-card style="width: 750px; max-width: 80vw">
+        <q-card-section class="text-h4"> Changelog </q-card-section>
+        <q-card-section class="text-body1">
+          <p>
+            Full Source Code:
+            <a href="https://github.com/lukajaa/bay-clock-2"
+              >https://github.com/lukajaa/bay-clock-2</a
+            >
+          </p>
+          <h5 class="q-my-sm">2.0.1 - 2/3/2023</h5>
+          <p class="q-my-none">- MIT license</p>
+          <p class="q-my-none">- Added changelog</p>
+          <p class="q-my-none">- Fixed lunch menu</p>
+          <p class="q-my-none">- Added feedback form</p>
+          <h5 class="q-my-sm">2.0 - 2/2/2023</h5>
+          <p class="q-my-none">- 150+ more colors</p>
+          <p class="q-my-none">- Links Dashboard</p>
+          <p class="q-my-none">- Individual button colors</p>
+          <p class="q-my-none">- Removed /civics and /superidol</p>
+          <p class="q-my-none">- Custom immersive names</p>
+          <p class="q-my-none">- Dark mode</p>
+          <p class="q-my-none">- Weekly schedule</p>
+          <p class="q-my-none">- Homework timers</p>
+          <p class="q-my-none">- Printable schedule maker</p>
+          <p class="q-my-none">- Fixed button colors not working</p>
+          <p class="q-my-none">- Fixed bug where schedule would not update over night</p>
+          <p class="q-my-none">- Upgraded to Vue3</p>
+          <p class="q-my-none">- Switched from buefy to quasar</p>
+          <p class="q-my-none">- Switched to typescript</p>
+          <h5 class="q-my-sm">1.0 - 10/16/21</h5>
+          <p class="q-my-none">- Coded in Vue2</p>
+          <p class="q-my-none">- Simple customization options</p>
+          <p class="q-my-none">- Useful links and lunch menu</p>
+          <p class="q-my-none">
+            Hosted at
+            <a href="https://lukajaa.github.io/clock/"
+              >https://lukajaa.github.io/clock/</a
+            >
+          </p>
+          <h5 class="q-my-sm">Pre 1.0 - 9/26/21</h5>
+          <p>
+            Simple HTML site hosted at
+            <a href="https://lukajaa.github.io/bay-clock/"
+              >https://lukajaa.github.io/bay-clock/</a
+            >
+          </p>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+
     <!-- credits message -->
     <q-dialog v-model="creditsMenu">
       <q-card style="width: 500px; max-width: 90vw">
@@ -552,14 +604,9 @@
         Created by <a href="https://lucaskchang.com" target="_blank">Lucas Chang</a>
       </p>
       <p :class="['q-mt-sm', darkMode ? 'text-grey-4' : 'text-dark']">
-        <a
-          :class="['footer-link', darkMode ? 'text-grey-4' : 'text-dark']"
-          href="https://github.com/lukajaa/bay-clock-2"
-          target="_blank"
-          >Source Code</a
-        >
+        <a class="cursor-pointer" @click="codeMenu = true" target="_blank">Code</a>
         / <a class="cursor-pointer" @click="toolsMenu = true">Tools</a> /
-        <a class="cursor-pointer" @click="bugReport">Bug Report</a> /
+        <a class="cursor-pointer" @click="bugReport">Feedback</a> /
         <a class="cursor-pointer" @click="creditsMenu = true">Credits</a>
       </p>
     </div>
@@ -625,6 +672,7 @@ const activityMenu = ref<boolean>(false);
 const weekMenu = ref<boolean>(false);
 const linksMenu = ref<boolean>(false);
 const creditsMenu = ref<boolean>(false);
+const codeMenu = ref<boolean>(false);
 
 // custom schedule menu values and temp values
 const activitySchedule = ref<ActivitySchedule>(activities);
@@ -959,7 +1007,9 @@ function parseScheduleDict(dict: UnparsedScheduleType) {
 function bugReport() {
   $q.dialog({
     title: "Found a bug or have a suggestion?",
-    message: "Email: lchang24@bayschoolsf.org",
+    message:
+      "<a href='https://forms.gle/tRtEr65ubHiMVZN36'>https://forms.gle/tRtEr65ubHiMVZN36</a>",
+    html: true,
   });
 }
 
@@ -1074,7 +1124,6 @@ function resetStyles() {
     };
     tempDetailedTime.value = false;
     tempDarkMode.value = false;
-    $q.dark.set(false);
   });
 }
 
