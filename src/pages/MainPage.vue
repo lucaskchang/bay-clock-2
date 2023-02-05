@@ -60,7 +60,7 @@
             'justify-between',
             'text-subtitle1',
             'absolute-full',
-            darkMode ? 'text-grey-4' : 'text-dark',
+            'text-' + getFontColor('bar'),
           ]"
         >
           <div class="col-auto q-ml-sm">
@@ -81,6 +81,7 @@
           :color="colorPalette[buttonColors['Links']]"
           label="Useful Links"
           @click="linksMenu = true"
+          :text-color="getFontColor('buttons')"
           rounded
           no-caps
         />
@@ -89,6 +90,7 @@
           :color="colorPalette[buttonColors['Menu']]"
           label="Lunch Menu"
           @click="lunchMenu = true"
+          :text-color="getFontColor('buttons')"
           rounded
           no-caps
         />
@@ -97,6 +99,7 @@
           :color="colorPalette[buttonColors['Schedule']]"
           label="Custom Schedule"
           @click="scheduleMenu = true"
+          :text-color="getFontColor('buttons')"
           rounded
           no-caps
         />
@@ -105,6 +108,7 @@
           :color="colorPalette[buttonColors['Styles']]"
           label="Customize"
           @click="styleMenu = true"
+          :text-color="getFontColor('buttons')"
           rounded
           no-caps
         />
@@ -115,6 +119,7 @@
           :color="colorPalette[buttonColors['Weekly']]"
           label="Weekly Schedule"
           @click="weekMenu = true"
+          :text-color="getFontColor('buttons')"
           rounded
           no-caps
         />
@@ -184,13 +189,18 @@
     </q-dialog>
 
     <!-- custom activity menu (within schedule menu) -->
-    <q-dialog v-model="activityMenu">
+    <q-dialog v-model="activityMenu" @shake="activityShake" persistent>
       <q-card class="modal-card">
         <q-card-section>
           <div class="row text-center q-ma-sm">
             <div v-for="day of dayNames" :key="day" class="col">
               <h6 class="q-my-sm">{{ day }}</h6>
-              <q-input filled v-model="tempActivitySchedule[day]['start']" mask="time">
+              <q-input
+                filled
+                v-model="tempActivitySchedule[day]['start']"
+                mask="time"
+                :rules="[(value) => isValidTime(value) || 'Not a valid time']"
+              >
                 <template #append>
                   <q-icon name="access_time" class="cursor-pointer">
                     <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -204,7 +214,12 @@
                 </template>
               </q-input>
               <p>to</p>
-              <q-input filled v-model="tempActivitySchedule[day]['end']" mask="time">
+              <q-input
+                filled
+                v-model="tempActivitySchedule[day]['end']"
+                mask="time"
+                :rules="[(value) => isValidTime(value) || 'Not a valid time']"
+              >
                 <template #append>
                   <q-icon name="access_time" class="cursor-pointer">
                     <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -221,7 +236,7 @@
           </div>
         </q-card-section>
         <div class="q-pa-lg">
-          <q-btn label="Done" @click="activityMenu = false" color="primary" />
+          <q-btn label="Done" @click="activityShake" color="primary" />
         </div>
       </q-card>
     </q-dialog>
@@ -280,6 +295,12 @@
                       </q-popup-proxy>
                     </q-btn>
                   </div>
+                  <q-select
+                    v-model="tempFontColors['bar']"
+                    :options="['Auto', 'Dark', 'Light']"
+                    label="Font Color"
+                    style="max-width: 150px"
+                  />
                   <h6 class="q-mb-none">Button Colors</h6>
                   <div class="row q-gutter-sm">
                     <div class="col-auto">
@@ -318,6 +339,12 @@
                       </q-btn>
                     </div>
                   </div>
+                  <q-select
+                    v-model="tempFontColors['buttons']"
+                    :options="['Auto', 'Dark', 'Light']"
+                    label="Font Color"
+                    style="max-width: 150px"
+                  />
                   <h6 class="q-mb-none">Dark Mode</h6>
                   <q-toggle v-model="tempDarkMode" color="primary" label="Dark Mode" />
                 </q-tab-panel>
@@ -672,6 +699,11 @@ const buttonColors = ref<StringString>({
   Weekly: "",
 });
 const colorBeingChosen = ref<string>("Links");
+const fontColors = ref<StringString>({
+  bar: "Auto",
+  buttons: "Auto",
+});
+const tempFontColors = ref<StringString>({});
 const toggles = ref<ToggleDict>({
   Clock: true,
   Date: true,
@@ -898,6 +930,19 @@ function getCustomName(block: string): string {
   return customSchedule.value[block] || block;
 }
 
+// returns correct color for component
+function getFontColor(component: string) {
+  if (fontColors.value[component] == "Auto") {
+    if (component == "bar") {
+      return darkMode.value ? "grey-4" : "dark";
+    }
+  } else if (fontColors.value[component] == "Dark") {
+    return "dark";
+  } else {
+    return "grey-4";
+  }
+}
+
 // returns the schedule of a day given the day
 function getDaySchedule(day_input: number): ParsedScheduleType {
   var now = new Date(time.value.getTime());
@@ -972,6 +1017,19 @@ function parseScheduleDict(dict: UnparsedScheduleType) {
     };
   }
   return parsedDaySchedule;
+}
+
+// checks whether a user inputted HH:MM is valid
+function isValidTime(time: string) {
+  var hours = time.split(":")[0];
+  var minutes = time.split(":")[1];
+  if (Number(hours) > 23 || Number(minutes) > 59) {
+    return false;
+  }
+  if (hours.length < 1 || minutes.length < 2) {
+    return false;
+  }
+  return true;
 }
 
 // bug report popup
@@ -1056,6 +1114,29 @@ function scheduleShake() {
   }
 }
 
+// prevents closing activity popup if times are invalid
+function activityShake() {
+  var valid = true;
+  for (const start_end of Object.values(tempActivitySchedule.value)) {
+    if (!isValidTime(start_end["start"]) || !isValidTime(start_end["end"])) {
+      valid = false;
+      break;
+    }
+  }
+  if (valid) {
+    activityMenu.value = false;
+  } else {
+    $q.notify({
+      message: "You have inputted invalid times!",
+      color: "negative",
+      position: "bottom-right",
+      icon: "close",
+      timeout: 1000,
+      group: false,
+    });
+  }
+}
+
 // sets the custom styles
 function setStyles() {
   $q.localStorage.set("bar_color", tempBarColor.value);
@@ -1063,11 +1144,13 @@ function setStyles() {
   $q.localStorage.set("toggles", tempToggles.value);
   $q.localStorage.set("detailed_time", tempDetailedTime.value);
   $q.localStorage.set("dark_mode", tempDarkMode.value);
+  $q.localStorage.set("font_colors", tempFontColors.value);
   barColor.value = tempBarColor.value;
   buttonColors.value = tempButtonColors.value;
   toggles.value = tempToggles.value;
   detailedTime.value = tempDetailedTime.value;
   darkMode.value = tempDarkMode.value;
+  fontColors.value = tempFontColors.value;
   $q.dark.set(darkMode.value);
   styleMenu.value = false;
 }
@@ -1093,6 +1176,10 @@ function resetStyles() {
       "Time Left": true,
       "Special Schedule Indicator": true,
     };
+    tempFontColors.value = {
+      bar: "Auto",
+      buttons: "Auto",
+    };
     tempDetailedTime.value = false;
     tempDarkMode.value = false;
   });
@@ -1105,6 +1192,7 @@ function stylesShake() {
     _.isEqual(tempButtonColors.value, buttonColors.value) &&
     _.isEqual(tempToggles.value, toggles.value) &&
     _.isEqual(tempDetailedTime.value, detailedTime.value) &&
+    _.isEqual(tempFontColors.value, fontColors.value) &&
     tempDarkMode.value == darkMode.value
   ) {
     styleMenu.value = false;
@@ -1155,6 +1243,10 @@ watch(styleMenu, function (val) {
     Date: toggles.value["Date"],
     "Time Left": toggles.value["Time Left"],
     "Special Schedule Indicator": toggles.value["Special Schedule Indicator"],
+  };
+  tempFontColors.value = {
+    bar: fontColors.value["bar"],
+    buttons: fontColors.value["buttons"],
   };
   tempDetailedTime.value = detailedTime.value;
   tempDarkMode.value = darkMode.value;
@@ -1217,11 +1309,15 @@ onMounted(() => {
   if (check_hide_welcome_menu) {
     hideWelcomeMenu.value = check_hide_welcome_menu;
   }
+  var check_font_colors = <StringString>$q.localStorage.getItem("font_colors");
+  if (check_font_colors) {
+    fontColors.value = check_font_colors;
+  }
 });
 
 // update time and title every second
 setInterval(() => {
-  time.value = new Date();
+  time.value = new Date("2023/2/7");
   document.title = currentBlock.value;
 }, 1000);
 </script>

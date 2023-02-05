@@ -6,6 +6,8 @@
       "Added changelog",
       "Fixed lunch menu",
       "Added feedback form",
+      "Added option for custom font colors",
+      "Fixed bug where invalid times could be inputted for activities",
       "Back to Bay Clock button component",
       "Schedule page and timer page documentation"
     ]
