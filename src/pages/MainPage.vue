@@ -1317,7 +1317,7 @@ onMounted(() => {
 
 // update time and title every second
 setInterval(() => {
-  time.value = new Date("2023/2/7");
+  time.value = new Date();
   document.title = currentBlock.value;
 }, 1000);
 </script>
