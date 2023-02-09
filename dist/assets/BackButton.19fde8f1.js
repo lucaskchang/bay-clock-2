@@ -1,0 +1,1 @@
+import{a6 as a,aZ as o,a7 as e,a8 as t,ag as c,C as n}from"./index.cfb29a09.js";const r=a({name:"BackButton"}),s={class:"fixed-bottom-left q-ma-md"};function d(i,m,p,_,B,l){return e(),t("div",s,[c(n,{color:"primary",label:"Back to Bay Clock",icon:"arrow_back",size:"md",to:"/",rounded:"","no-caps":""})])}var k=o(r,[["render",d]]);export{k as B};
