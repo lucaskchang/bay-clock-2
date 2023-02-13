@@ -78,7 +78,7 @@
       <div class="row">
         <q-btn
           class="q-ma-sm"
-          :color="colorPalette[buttonColors['Links']] || buttonColors['Links']"
+          :color="getButtonColor('Links')"
           label="Useful Links"
           @click="linksMenu = true"
           :text-color="getFontColor('buttons')"
@@ -87,7 +87,7 @@
         />
         <q-btn
           class="q-ma-sm"
-          :color="colorPalette[buttonColors['Menu']] || buttonColors['Menu']"
+          :color="getButtonColor('Menu')"
           label="Lunch Menu"
           @click="lunchMenu = true"
           :text-color="getFontColor('buttons')"
@@ -96,7 +96,7 @@
         />
         <q-btn
           class="q-ma-sm"
-          :color="colorPalette[buttonColors['Schedule']] || buttonColors['Schedule']"
+          :color="getButtonColor('Schedule')"
           label="Custom Schedule"
           @click="scheduleMenu = true"
           :text-color="getFontColor('buttons')"
@@ -105,7 +105,7 @@
         />
         <q-btn
           class="q-ma-sm"
-          :color="colorPalette[buttonColors['Styles']] || buttonColors['Styles']"
+          :color="getButtonColor('Styles')"
           label="Customize"
           @click="styleMenu = true"
           :text-color="getFontColor('buttons')"
@@ -116,7 +116,7 @@
       <div class="row">
         <q-btn
           class="q-ma-sm"
-          :color="colorPalette[buttonColors['Weekly']] || buttonColors['Weekly']"
+          :color="getButtonColor('Weekly')"
           label="Weekly Schedule"
           @click="weekMenu = true"
           :text-color="getFontColor('buttons')"
@@ -950,6 +950,17 @@ function getCustomName(block: string): string {
     }
   }
   return customSchedule.value[block] || block;
+}
+
+// return color for given button
+function getButtonColor(button: string) {
+  if (Object.keys(colorPalette).includes(buttonColors.value[button])) {
+    return colorPalette[buttonColors.value[button]];
+  } else if (buttonColors.value[button] != "") {
+    return buttonColors.value[button];
+  } else {
+    return;
+  }
 }
 
 // returns correct color for component
