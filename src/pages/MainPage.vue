@@ -1,5 +1,5 @@
 <template>
-  <div class="q-ma-md">
+  <div class="q-pa-md window-height">
     <!-- top bar -->
     <div
       :class="[
@@ -50,7 +50,7 @@
       <q-linear-progress
         :class="[darkMode ? 'bg-dark' : 'bg-grey-3']"
         size="25px"
-        :color="colorPalette[barColor]"
+        :color="colorPalette[barColor] || barColor"
         :value="getProgress(block)"
         style="border-radius: 50px"
       >
@@ -78,7 +78,7 @@
       <div class="row">
         <q-btn
           class="q-ma-sm"
-          :color="colorPalette[buttonColors['Links']]"
+          :color="colorPalette[buttonColors['Links']] || buttonColors['Links']"
           label="Useful Links"
           @click="linksMenu = true"
           :text-color="getFontColor('buttons')"
@@ -87,7 +87,7 @@
         />
         <q-btn
           class="q-ma-sm"
-          :color="colorPalette[buttonColors['Menu']]"
+          :color="colorPalette[buttonColors['Menu']] || buttonColors['Menu']"
           label="Lunch Menu"
           @click="lunchMenu = true"
           :text-color="getFontColor('buttons')"
@@ -96,7 +96,7 @@
         />
         <q-btn
           class="q-ma-sm"
-          :color="colorPalette[buttonColors['Schedule']]"
+          :color="colorPalette[buttonColors['Schedule']] || buttonColors['Schedule']"
           label="Custom Schedule"
           @click="scheduleMenu = true"
           :text-color="getFontColor('buttons')"
@@ -105,7 +105,7 @@
         />
         <q-btn
           class="q-ma-sm"
-          :color="colorPalette[buttonColors['Styles']]"
+          :color="colorPalette[buttonColors['Styles']] || buttonColors['Styles']"
           label="Customize"
           @click="styleMenu = true"
           :text-color="getFontColor('buttons')"
@@ -116,7 +116,7 @@
       <div class="row">
         <q-btn
           class="q-ma-sm"
-          :color="colorPalette[buttonColors['Weekly']]"
+          :color="colorPalette[buttonColors['Weekly']] || buttonColors['Weekly']"
           label="Weekly Schedule"
           @click="weekMenu = true"
           :text-color="getFontColor('buttons')"
@@ -128,6 +128,7 @@
           class="q-ma-sm"
           v-model="holidayBool"
           :label="holiday"
+          :color="holidays[holiday]['color']"
         />
       </div>
     </div>
@@ -140,103 +141,159 @@
     <!-- custom schedule menu -->
     <q-dialog v-model="scheduleMenu" @shake="scheduleShake" persistent>
       <q-card style="width: 900px; max-width: 80vw">
-        <q-card-section class="text-h5"> Custom Schedule </q-card-section>
+        <q-card-section class="text-h5">
+          Custom Schedule -
+          {{ scheduleTab.charAt(0).toUpperCase() + scheduleTab.slice(1) }}</q-card-section
+        >
         <q-card-section>
-          <q-form @submit="setSchedule" @reset="resetSchedule" class="q-gutter-md">
-            <div v-if="!immersive">
-              <q-input
-                v-for="block of Object.keys(tempSchedule)"
-                :key="block"
-                :label="block"
-                v-model="tempSchedule[block]"
-                class="q-my-lg"
-                dense
-                rounded
-                outlined
-              />
-              <q-btn
-                class="q-mb-lg"
-                label="Sports/Activities Schedule"
-                color="primary"
-                @click="activityMenu = true"
-                push
-              />
-            </div>
-            <div v-else>
-              <q-input
-                label="Immersive"
-                v-model="tempCustomImmersiveName"
-                class="q-mb-lg"
-                dense
-                rounded
-                outlined
-              />
-            </div>
-            <div>
-              <q-btn label="Save" type="submit" color="primary" />
-              <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
-              <q-btn
-                label="Cancel"
-                @click="scheduleMenu = false"
-                color="negative"
-                flat
-                class="float-right"
-              />
-            </div>
-          </q-form>
-        </q-card-section>
-      </q-card>
-    </q-dialog>
+          <q-splitter v-model="menuSplitter" disable>
+            <template #before>
+              <q-tabs v-model="scheduleTab" vertical no-caps class="text-h6">
+                <q-tab name="schedule" label="Schedule" />
+                <q-tab name="activites" label="Activities" />
+              </q-tabs>
+            </template>
 
-    <!-- custom activity menu (within schedule menu) -->
-    <q-dialog v-model="activityMenu" @shake="activityShake" persistent>
-      <q-card class="modal-card">
-        <q-card-section>
-          <div class="row text-center q-ma-sm">
-            <div v-for="day of dayNames" :key="day" class="col">
-              <h6 class="q-my-sm">{{ day }}</h6>
-              <q-input
-                filled
-                v-model="tempActivitySchedule[day]['start']"
-                mask="time"
-                :rules="[(value) => isValidTime(value) || 'Not a valid time']"
+            <template #after>
+              <q-tab-panels
+                v-model="scheduleTab"
+                animated
+                vertical
+                transition-prev="jump-up"
+                transition-next="jump-up"
               >
-                <template #append>
-                  <q-icon name="access_time" class="cursor-pointer">
-                    <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                      <q-time v-model="tempActivitySchedule[day]['start']">
-                        <div class="row items-center justify-end">
-                          <q-btn v-close-popup label="Close" color="primary" flat />
-                        </div>
-                      </q-time>
-                    </q-popup-proxy>
-                  </q-icon>
-                </template>
-              </q-input>
-              <p>to</p>
-              <q-input
-                filled
-                v-model="tempActivitySchedule[day]['end']"
-                mask="time"
-                :rules="[(value) => isValidTime(value) || 'Not a valid time']"
-              >
-                <template #append>
-                  <q-icon name="access_time" class="cursor-pointer">
-                    <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                      <q-time v-model="tempActivitySchedule[day]['end']">
-                        <div class="row items-center justify-end">
-                          <q-btn v-close-popup label="Close" color="primary" flat />
-                        </div>
-                      </q-time>
-                    </q-popup-proxy>
-                  </q-icon>
-                </template>
-              </q-input>
-            </div>
-          </div>
+                <q-tab-panel name="schedule" class="q-pt-none">
+                  <div v-if="!immersive">
+                    <q-input
+                      v-for="block of Object.keys(tempSchedule)"
+                      :key="block"
+                      :label="block"
+                      v-model="tempSchedule[block]"
+                      class="q-my-lg"
+                      dense
+                      rounded
+                      outlined
+                    />
+                  </div>
+                  <div v-else>
+                    <q-input
+                      label="Immersive"
+                      v-model="tempCustomImmersiveName"
+                      class="q-mb-lg"
+                      dense
+                      rounded
+                      outlined
+                    />
+                  </div>
+                </q-tab-panel>
+                <q-tab-panel name="activites">
+                  <div class="row text-center q-ma-sm">
+                    <div
+                      v-for="day of dayNames.slice(1, 6)"
+                      :key="day"
+                      :class="[
+                        tempActivityDays.includes(day) ? '' : 'no-pointer-events',
+                        tempActivityDays.includes(day) ? '' : 'bg-grey',
+                        'col',
+                      ]"
+                    >
+                      <h6 class="q-my-sm">{{ day }}</h6>
+                      <q-input
+                        filled
+                        v-model="tempActivitySchedule[day]['start']"
+                        mask="time"
+                        :rules="[(value) => isValidTime(value) || 'Not a valid time']"
+                      >
+                        <template #append>
+                          <q-icon name="access_time" class="cursor-pointer">
+                            <q-popup-proxy
+                              cover
+                              transition-show="scale"
+                              transition-hide="scale"
+                            >
+                              <q-time v-model="tempActivitySchedule[day]['start']">
+                                <div class="row items-center justify-end">
+                                  <q-btn
+                                    v-close-popup
+                                    label="Close"
+                                    color="primary"
+                                    flat
+                                  />
+                                </div>
+                              </q-time>
+                            </q-popup-proxy>
+                          </q-icon>
+                        </template>
+                      </q-input>
+                      <p>to</p>
+                      <q-input
+                        filled
+                        v-model="tempActivitySchedule[day]['end']"
+                        mask="time"
+                        :rules="[(value) => isValidTime(value) || 'Not a valid time']"
+                      >
+                        <template #append>
+                          <q-icon name="access_time" class="cursor-pointer">
+                            <q-popup-proxy
+                              cover
+                              transition-show="scale"
+                              transition-hide="scale"
+                            >
+                              <q-time v-model="tempActivitySchedule[day]['end']">
+                                <div class="row items-center justify-end">
+                                  <q-btn
+                                    v-close-popup
+                                    label="Close"
+                                    color="primary"
+                                    flat
+                                  />
+                                </div>
+                              </q-time>
+                            </q-popup-proxy>
+                          </q-icon>
+                        </template>
+                      </q-input>
+                    </div>
+                  </div>
+                  <div>
+                    <h6 class="q-mb-none">Toggle Days</h6>
+
+                    <div class="row">
+                      <q-toggle label="Monday" v-model="tempActivityDays" val="Mon" />
+                      <q-toggle label="Tuesday" v-model="tempActivityDays" val="Tue" />
+                      <q-toggle label="Wednesday" v-model="tempActivityDays" val="Wed" />
+                      <q-toggle label="Thursday" v-model="tempActivityDays" val="Thu" />
+                      <q-toggle label="Friday" v-model="tempActivityDays" val="Fri" />
+                      <q-btn
+                        color="red"
+                        label="Disable All"
+                        @click="tempActivityDays = []"
+                        class="q-ma-sm"
+                        no-caps
+                      />
+                    </div>
+                  </div>
+                </q-tab-panel>
+              </q-tab-panels>
+            </template>
+          </q-splitter>
         </q-card-section>
         <div class="q-pa-lg">
-          <q-btn label="Done" @click="activityShake" color="primary" />
+          <q-btn label="Save" @click="setSchedule" color="primary" />
+          <q-btn
+            label="Reset"
+            @click="resetSchedule"
+            color="primary"
+            flat
+            class="q-ml-sm"
+          />
+          <q-btn
+            label="Cancel"
+            @click="scheduleMenu = false"
+            color="negative"
+            flat
+            class="float-right"
+          />
         </div>
       </q-card>
     </q-dialog>
@@ -248,11 +305,12 @@
           Custom Styles - {{ styleTab.charAt(0).toUpperCase() + styleTab.slice(1) }}
         </q-card-section>
         <q-card-section>
-          <q-splitter v-model="styleSplitter" disable>
+          <q-splitter v-model="menuSplitter" disable>
             <template #before>
               <q-tabs v-model="styleTab" vertical no-caps class="text-h6">
                 <q-tab name="colors" label="Colors" />
                 <q-tab name="toggles" label="Toggles" />
+                <q-tab name="presets" label="Presets" />
                 <q-tab name="other" label="Other" />
               </q-tabs>
             </template>
@@ -265,8 +323,8 @@
                 transition-prev="jump-up"
                 transition-next="jump-up"
               >
-                <q-tab-panel name="colors" class="q-pt-none">
-                  <h6 class="q-mb-none">Progress Bar Color</h6>
+                <q-tab-panel name="colors">
+                  <h6 class="q-my-none">Progress Bar Color</h6>
                   <div class="q-gutter-sm">
                     <q-btn
                       v-for="(color, hex) of Object.fromEntries(
@@ -359,6 +417,29 @@
                     />
                   </div>
                 </q-tab-panel>
+                <q-tab-panel name="presets">
+                  <q-btn
+                    v-for="(color, preset_name) of presets"
+                    :color="color + '-2'"
+                    text-color="black"
+                    :key="preset_name"
+                    class="shadow-1 rounded-borders q-pa-sm q-ma-sm"
+                    @click="applyPreset(preset_name, color)"
+                    no-caps
+                  >
+                    <p class="q-my-none q-mx-sm text-subtitle1">{{ preset_name }}</p>
+                    <q-btn
+                      :color="color + '-4'"
+                      class="no-border-radius inherit-pointer"
+                      push
+                    />
+                    <q-btn
+                      :color="color + '-8'"
+                      class="no-border-radius inherit-pointer"
+                      push
+                    />
+                  </q-btn>
+                </q-tab-panel>
                 <q-tab-panel name="other">
                   <q-toggle
                     v-model="tempDetailedTime"
@@ -394,12 +475,12 @@
     <q-dialog v-model="weekMenu">
       <q-card style="width: 1300px; max-width: 80vw">
         <div class="row q-ma-sm">
-          <div v-for="day in dayNames" :key="day" class="col">
+          <div v-for="day in dayNames.slice(1, 6)" :key="day" class="col">
             <div class="q-ma-sm text-center">
               <h4 class="q-my-none">{{ day }}</h4>
             </div>
             <div
-              v-for="(start_end, block) of getDaySchedule(dayNames.indexOf(day) + 1)"
+              v-for="(start_end, block) of getDaySchedule(dayNames.indexOf(day))"
               :key="block"
               :class="[
                 'q-px-sm',
@@ -520,7 +601,10 @@
     </q-dialog>
 
     <!-- footer -->
-    <div class="float-bottom text-subtitle1 text-center q-pt-xl q-mt-xl">
+    <div
+      v-if="toggles['Footer']"
+      class="float-bottom text-subtitle1 text-center q-pt-xl q-mt-xl"
+    >
       <p
         :class="[
           'q-ma-none',
@@ -534,7 +618,14 @@
       <p :class="['q-mt-sm', darkMode ? 'text-grey-4' : 'text-dark']">
         <a class="cursor-pointer" @click="codeMenu = true" target="_blank">Code</a>
         / <a class="cursor-pointer" @click="toolsMenu = true">Tools</a> /
-        <a class="cursor-pointer" @click="bugReport">Feedback</a> /
+        <a
+          :class="['cursor-pointer', darkMode ? 'text-grey-4' : 'text-dark']"
+          href="https://forms.gle/tRtEr65ubHiMVZN36"
+          target="_blank"
+          style="text-decoration: none"
+          >Feedback</a
+        >
+        /
         <a class="cursor-pointer" @click="creditsMenu = true">Credits</a>
       </p>
     </div>
@@ -566,6 +657,7 @@ import color_palette from "../data/guides/color_palette.json";
 import holidays_json from "../data/schedules/holidays.json";
 import useful_links from "../data/guides/useful_links.json";
 import tool_links from "../data/guides/tool_links.json";
+import presets_json from "../data/guides/presets.json";
 import changelog_json from "../data/changelog.json";
 // schedules
 const immersives: ImmersiveScheduleType = immersives_json;
@@ -576,14 +668,15 @@ const breaks: SimpleScheduleType = breaks_json;
 // guides
 const colorGuide: StringString = color_guide;
 const colorPalette: StringString = color_palette;
-const holidays: SimpleScheduleType = holidays_json;
+const holidays: HolidayType = holidays_json;
 const usefulLinks: LinksType = useful_links;
 const toolLinks: LinksType = tool_links;
+const presets: StringString = presets_json;
 const changelog: ChangelogType = changelog_json;
 
 // VARS
 const $q = useQuasar(); // quasar instance
-const dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri"];
+const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const isMobile = $q.platform.is.mobile;
 
 // REFS
@@ -596,8 +689,8 @@ const toolsMenu = ref<boolean>(false);
 const scheduleMenu = ref<boolean>(false);
 const styleMenu = ref<boolean>(false);
 const styleTab = ref<string>("colors");
-const styleSplitter = ref<number>(25);
-const activityMenu = ref<boolean>(false);
+const scheduleTab = ref<string>("schedule");
+const menuSplitter = ref<number>(25);
 const weekMenu = ref<boolean>(false);
 const linksMenu = ref<boolean>(false);
 const creditsMenu = ref<boolean>(false);
@@ -606,6 +699,8 @@ const codeMenu = ref<boolean>(false);
 // custom schedule menu values and temp values
 const activitySchedule = ref<ActivitySchedule>(activities);
 const tempActivitySchedule = ref<ActivitySchedule>({});
+const activityDays = ref<Array<string>>([...dayNames]);
+const tempActivityDays = ref<Array<string>>([]);
 const customSchedule = ref<ScheduleType>({
   A: "A",
   B: "B",
@@ -640,6 +735,7 @@ const toggles = ref<ToggleDict>({
   Date: true,
   "Time Left": true,
   "Special Schedule Indicator": true,
+  Footer: true,
 });
 const tempToggles = ref<ToggleDict>({});
 const tempDetailedTime = ref<boolean>(false);
@@ -806,18 +902,20 @@ function appendActivities(
   schedule: UnparsedScheduleType,
   day: number
 ): UnparsedScheduleType {
-  var activity_start = activitySchedule.value[dayNames[day - 1]]["start"];
-  var activity_end = activitySchedule.value[dayNames[day - 1]]["end"];
-  schedule["Activities + Sports/Drama"] = {
-    start: {
-      hour: Number(activity_start.split(":")[0]),
-      minute: Number(activity_start.split(":")[1]),
-    },
-    end: {
-      hour: Number(activity_end.split(":")[0]),
-      minute: Number(activity_end.split(":")[1]),
-    },
-  };
+  if (activityDays.value.includes(dayNames[day])) {
+    var activity_start = activitySchedule.value[dayNames[day]]["start"];
+    var activity_end = activitySchedule.value[dayNames[day]]["end"];
+    schedule["Activities + Sports/Drama"] = {
+      start: {
+        hour: Number(activity_start.split(":")[0]),
+        minute: Number(activity_start.split(":")[1]),
+      },
+      end: {
+        hour: Number(activity_end.split(":")[0]),
+        minute: Number(activity_end.split(":")[1]),
+      },
+    };
+  }
   return schedule;
 }
 
@@ -836,7 +934,6 @@ function getProgress(block: string): number {
   if (now < start) {
     return 0;
   } else if (now > end) {
-    console.log(end);
     return 1;
   } else {
     return (now.getTime() - start.getTime()) / (end.getTime() - start.getTime());
@@ -872,7 +969,7 @@ function getFontColor(component: string) {
 function getDaySchedule(day_input: number): ParsedScheduleType {
   var now = new Date(time.value.getTime());
   var day = now.getDay(),
-    diff = now.getDate() - day + (day == 0 ? -(6 - day_input) : day_input);
+    diff = now.getDate() - day + day_input;
   now.setDate(diff);
 
   var unparsedDaySchedule = <UnparsedScheduleType>{};
@@ -962,24 +1059,34 @@ function pad(number: number) {
   return number < 10 ? "0" + number : number;
 }
 
-// bug report popup
-function bugReport() {
-  $q.dialog({
-    title: "Found a bug or have a suggestion?",
-    message:
-      "<a href='https://forms.gle/tRtEr65ubHiMVZN36'>https://forms.gle/tRtEr65ubHiMVZN36</a>",
-    html: true,
-  });
-}
-
 // sets the custom schedule
 function setSchedule() {
+  var valid = true;
+  for (const start_end of Object.values(tempActivitySchedule.value)) {
+    if (!isValidTime(start_end["start"]) || !isValidTime(start_end["end"])) {
+      valid = false;
+      break;
+    }
+  }
+  if (!valid) {
+    $q.notify({
+      message: "You have inputted invalid times!",
+      color: "negative",
+      position: "bottom-right",
+      icon: "close",
+      timeout: 1000,
+      group: false,
+    });
+    return;
+  }
   $q.localStorage.set("custom_blocks", tempSchedule.value);
   customSchedule.value = tempSchedule.value;
   $q.localStorage.set("custom_immersive_name", tempCustomImmersiveName.value);
   customImmersiveName.value = tempCustomImmersiveName.value;
   $q.localStorage.set("custom_activity_schedule", tempActivitySchedule.value);
   activitySchedule.value = tempActivitySchedule.value;
+  $q.localStorage.set("active_activity_days", tempActivityDays.value);
+  activityDays.value = tempActivityDays.value;
   scheduleMenu.value = false;
 }
 
@@ -1021,6 +1128,8 @@ function resetSchedule() {
         end: "16:00",
       },
     };
+    tempActivityDays.value = ["Mon", "Tue", "Wed", "Thu", "Fri"];
+    setSchedule();
   });
 }
 
@@ -1029,35 +1138,13 @@ function scheduleShake() {
   if (
     _.isEqual(tempSchedule.value, customSchedule.value) &&
     _.isEqual(tempCustomImmersiveName.value, customImmersiveName.value) &&
-    _.isEqual(tempActivitySchedule.value, activitySchedule.value)
+    _.isEqual(tempActivitySchedule.value, activitySchedule.value) &&
+    _.isEqual(tempActivityDays.value, activityDays.value)
   ) {
     scheduleMenu.value = false;
   } else {
     $q.notify({
       message: "You have unsaved changes!",
-      color: "negative",
-      position: "bottom-right",
-      icon: "close",
-      timeout: 1000,
-      group: false,
-    });
-  }
-}
-
-// prevents closing activity popup if times are invalid
-function activityShake() {
-  var valid = true;
-  for (const start_end of Object.values(tempActivitySchedule.value)) {
-    if (!isValidTime(start_end["start"]) || !isValidTime(start_end["end"])) {
-      valid = false;
-      break;
-    }
-  }
-  if (valid) {
-    activityMenu.value = false;
-  } else {
-    $q.notify({
-      message: "You have inputted invalid times!",
       color: "negative",
       position: "bottom-right",
       icon: "close",
@@ -1105,6 +1192,7 @@ function resetStyles() {
       Date: true,
       "Time Left": true,
       "Special Schedule Indicator": true,
+      Footer: true,
     };
     tempFontColors.value = {
       bar: "Auto",
@@ -1112,6 +1200,7 @@ function resetStyles() {
     };
     tempDetailedTime.value = false;
     tempDarkMode.value = false;
+    setStyles();
   });
 }
 
@@ -1138,6 +1227,24 @@ function stylesShake() {
   }
 }
 
+function applyPreset(preset_name: string, color: string) {
+  $q.dialog({
+    title: "Confirm",
+    message: "Are you sure you want to apply the " + preset_name + " preset?",
+    cancel: true,
+  }).onOk(() => {
+    tempBarColor.value = color + "-4";
+    tempButtonColors.value = {
+      Links: color + "-8",
+      Menu: color + "-8",
+      Schedule: color + "-8",
+      Styles: color + "-8",
+      Weekly: color + "-8",
+    };
+    setStyles();
+  });
+}
+
 // WATCHERS
 
 // create a copy of the custom schedule to preserve original
@@ -1153,6 +1260,7 @@ watch(scheduleMenu, function (val) {
     };
     tempCustomImmersiveName.value = customImmersiveName.value;
     tempActivitySchedule.value = JSON.parse(JSON.stringify(activitySchedule.value));
+    tempActivityDays.value = [...activityDays.value];
   }
 });
 
@@ -1173,6 +1281,7 @@ watch(styleMenu, function (val) {
     Date: toggles.value["Date"],
     "Time Left": toggles.value["Time Left"],
     "Special Schedule Indicator": toggles.value["Special Schedule Indicator"],
+    Footer: toggles.value["Footer"],
   };
   tempFontColors.value = {
     bar: fontColors.value["bar"],
@@ -1233,6 +1342,10 @@ onMounted(() => {
   var check_font_colors = <StringString>$q.localStorage.getItem("font_colors");
   if (check_font_colors) {
     fontColors.value = check_font_colors;
+  }
+  var check_activity_days = <string[]>$q.localStorage.getItem("active_activity_days");
+  if (check_activity_days) {
+    activityDays.value = check_activity_days;
   }
 });
 

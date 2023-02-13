@@ -1,4 +1,17 @@
 {
+  "2.1 (All this should probably have been in 2.0)" : {
+    "date": "2/12/23",
+    "changes": [
+      "Accent color for holiday icon toggle",
+      "Resetting customizations saves and quits out of menu",
+      "Fixed bug where weekly schedule would not work on Sundays",
+      "Added tab system for schedule menu",
+      "Added feature that allows you to toggle on and off activities on certain days",
+      "Added toggle for footer",
+      "Turned feedback modal into a link",
+      "Added presets feature"
+    ]
+  },
   "2.0.1" : {
     "date": "2/5/23",
     "changes": [
