@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-md window-height">
+  <div class="q-pa-md">
     <!-- top bar -->
     <div
       :class="[
