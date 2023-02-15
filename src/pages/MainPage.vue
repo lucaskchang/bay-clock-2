@@ -633,7 +633,7 @@
     <!-- holiday floating icons -->
     <div v-if="holiday != '' && holidayBool" class="aboslute-center">
       <img
-        v-for="index in 50"
+        v-for="index in isMobile ? 15 : 50"
         :key="index"
         class="holiday-icon"
         :src="'images/icons/' + holidays[holiday]['icon']"
