@@ -75,8 +75,7 @@
             The Pomodoro Technique was developed by Francesco Cirillo. It functions in 30
             minute blocks with 25 minutes allotted for work and 5 minutes for a break.
             Learn more
-            <a href="https://todoist.com/productivity-methods/pomodoro-technique">here</a
-            >.
+            <a href="https://todoist.com/productivity-methods/pomodoro-technique">here</a>.
           </p>
         </q-card-section>
       </q-card>
