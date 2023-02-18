@@ -135,7 +135,7 @@
 
     <!-- lunch menu -->
     <q-dialog v-model="lunchMenu">
-      <q-img style="min-width: 40vw; overflow-y: hidden" src="menu/1.jpg" />
+      <q-img style="min-height: 90vh; min-width:40vw; overflow: hidden" src="menu/1.jpg" />
     </q-dialog>
 
     <!-- custom schedule menu -->
@@ -187,6 +187,14 @@
                   </div>
                 </q-tab-panel>
                 <q-tab-panel name="activites">
+                  <q-input
+                      label="Activity Name"
+                      v-model="tempCustomActivityName"
+                      class="q-mb-lg"
+                      dense
+                      rounded
+                      outlined
+                    />
                   <div class="row text-center q-ma-sm">
                     <div
                       v-for="day of dayNames.slice(1, 6)"
@@ -712,6 +720,8 @@ const customSchedule = ref<ScheduleType>({
 const tempSchedule = ref<ScheduleType>(customSchedule.value);
 const customImmersiveName = ref<string>("Immersive");
 const tempCustomImmersiveName = ref<string>("Immersive");
+const customActivityName = ref<string>("Activities + Sports/Drama");
+const tempCustomActivityName = ref<string>("");
 
 // custom styles menu values and temp values
 const tempBarColor = ref<string>("");
@@ -949,6 +959,9 @@ function getCustomName(block: string): string {
       return customImmersiveName.value + " Afternoon";
     }
   }
+  if (block == "Activities + Sports/Drama") {
+    return customActivityName.value;
+  }
   return customSchedule.value[block] || block;
 }
 
@@ -1098,6 +1111,8 @@ function setSchedule() {
   activitySchedule.value = tempActivitySchedule.value;
   $q.localStorage.set("active_activity_days", tempActivityDays.value);
   activityDays.value = tempActivityDays.value;
+  $q.localStorage.set("custom_activity_name", tempCustomActivityName.value);
+  customActivityName.value = tempCustomActivityName.value;
   scheduleMenu.value = false;
 }
 
@@ -1140,6 +1155,7 @@ function resetSchedule() {
       },
     };
     tempActivityDays.value = ["Mon", "Tue", "Wed", "Thu", "Fri"];
+    tempCustomActivityName.value = "Activities + Sports/Drama";
     setSchedule();
   });
 }
@@ -1150,7 +1166,8 @@ function scheduleShake() {
     _.isEqual(tempSchedule.value, customSchedule.value) &&
     _.isEqual(tempCustomImmersiveName.value, customImmersiveName.value) &&
     _.isEqual(tempActivitySchedule.value, activitySchedule.value) &&
-    _.isEqual(tempActivityDays.value, activityDays.value)
+    _.isEqual(tempActivityDays.value, activityDays.value)&&
+    _.isEqual(tempCustomActivityName.value, customActivityName.value)
   ) {
     scheduleMenu.value = false;
   } else {
@@ -1272,6 +1289,7 @@ watch(scheduleMenu, function (val) {
     tempCustomImmersiveName.value = customImmersiveName.value;
     tempActivitySchedule.value = JSON.parse(JSON.stringify(activitySchedule.value));
     tempActivityDays.value = [...activityDays.value];
+    tempCustomActivityName.value = customActivityName.value;
   }
 });
 
@@ -1357,6 +1375,10 @@ onMounted(() => {
   var check_activity_days = <string[]>$q.localStorage.getItem("active_activity_days");
   if (check_activity_days) {
     activityDays.value = check_activity_days;
+  }
+  var check_custom_activity_name = <string>$q.localStorage.getItem("custom_activity_name");
+  if (check_custom_activity_name) {
+    customActivityName.value = check_custom_activity_name;
   }
 });
 
