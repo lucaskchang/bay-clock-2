@@ -1,12 +1,13 @@
 {
-  "2.2" : {
+  "2.1.1" : {
     "date": "2/18/23",
     "changes": [
       "Fixed bug where you couldn't scroll",
       "Reduced holiday icon count on mobile",
       "Optimized images",
       "Custom activity names",
-      "Special Schedule"
+      "Special Schedule",
+      "Presidents Day"
     ]
   },
   "2.1 (All this should probably have been in 2.0)" : {
