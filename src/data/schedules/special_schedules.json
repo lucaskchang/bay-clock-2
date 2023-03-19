@@ -308,5 +308,91 @@
         "start": {"hour": 14, "minute": 30},
         "end": {"hour": 16, "minute": 0}
     }
+  },
+  "2023/3/20": {
+    "Morning Meeting": {
+        "start": {"hour": 8, "minute": 30},
+        "end": {"hour": 8, "minute": 55}
+    },
+    "E": {
+        "start": {"hour": 9, "minute": 0},
+        "end": {"hour": 10, "minute": 15}
+    },
+    "F": {
+        "start": {"hour": 10, "minute": 20},
+        "end": {"hour": 11, "minute": 35}
+    },
+    "Lunch": {
+        "start": {"hour": 11, "minute": 30},
+        "end": {"hour": 12, "minute": 30}
+    },
+    "A": {
+        "start": {"hour": 12, "minute": 30},
+        "end": {"hour": 13, "minute": 45}
+    },
+    "B": {
+        "start": {"hour": 13, "minute": 50},
+        "end": {"hour": 15, "minute": 5}
+    },
+    "Tutorial": {
+        "start": {"hour": 15, "minute": 5},
+        "end": {"hour": 15, "minute": 35}
+    },
+    "Activities + Sports/Drama": {
+        "start": {"hour": 13, "minute": 45},
+        "end": {"hour": 17, "minute": 0}
+    }
+  },
+  "2023/3/21": {
+    "Morning Meeting": {
+        "start": {"hour": 8, "minute": 30},
+        "end": {"hour": 8, "minute": 55}
+    },
+    "A": {
+        "start": {"hour": 9, "minute": 0},
+        "end": {"hour": 10, "minute": 15}
+    },
+    "B": {
+        "start": {"hour": 10, "minute": 20},
+        "end": {"hour": 11, "minute": 35}
+    },
+    "Lunch": {
+        "start": {"hour": 11, "minute": 35},
+        "end": {"hour": 12, "minute": 30}
+    },
+    "C": {
+        "start": {"hour": 12, "minute": 30},
+        "end": {"hour": 13, "minute": 45}
+    },
+    "D": {
+        "start": {"hour": 13, "minute": 50},
+        "end": {"hour": 15, "minute": 5}
+    },
+    "Tutorial": {
+        "start": {"hour": 15, "minute": 5},
+        "end": {"hour": 15, "minute": 35}
+    },
+    "Activities + Sports/Drama": {
+        "start": {"hour": 13, "minute": 45},
+        "end": {"hour": 17, "minute": 0}
+    }
+  },
+  "2023/3/22": {
+    "Morning Meeting": {
+        "start": {"hour": 8, "minute": 30},
+        "end": {"hour": 8, "minute": 55}
+    },
+    "E": {
+        "start": {"hour": 9, "minute": 0},
+        "end": {"hour": 10, "minute": 15}
+    },
+    "F": {
+        "start": {"hour": 10, "minute": 20},
+        "end": {"hour": 11, "minute": 35}
+    },
+    "Lunch / Elective Fair": {
+        "start": {"hour": 11, "minute": 30},
+        "end": {"hour": 12, "minute": 30}
+    }
   }
 }
