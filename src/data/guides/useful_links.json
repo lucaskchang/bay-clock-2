@@ -4,5 +4,6 @@
   "My Bay": {"link": "https://bayschoolsf.myschoolapp.com/", "image": "images\\my_bay.jpg"},
   "Announcment Digest": {"link": "https://docs.google.com/document/d/1c5YzT06GTn5CdX_7X7jZ2Ghhd5pK1aHhRRbOY78cr2M/", "image": "images\\announcements.jpg"},
   "Bay Map": {"link": "https://www.google.com/maps/d/edit?mid=1tBNv0IhwXTfDMeIaAX3SkCWVZGjSq5w", "image": "images\\bay_map.jpg"},
-  "Bay Riptide": {"link": "https://sites.google.com/bayschoolsf.org/the-bay-riptide/", "image": "images\\riptide.jpg"}
+  "Bay Riptide": {"link": "https://sites.google.com/bayschoolsf.org/the-bay-riptide/", "image": "images\\riptide.jpg"},
+  "Bay Calendar": {"link": "https://www.bayschoolsf.org/calendar", "image": "images\\calendar.jpg"}
 }
