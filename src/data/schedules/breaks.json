@@ -2,5 +2,6 @@
     "MLK Day": {"start": "2023/1/16", "end": "2023/1/17"},
     "Immersive Break": {"start": "2023/1/26", "end": "2023/2/2"},
     "Presidents' Day": {"start": "2023/2/20", "end": "2023/2/21"},
-    "Teacher Proffesional Development": {"start": "2023/3/31", "end": "2023/4/1"}
+    "Teacher Proffesional Development": {"start": "2023/3/31", "end": "2023/4/1"},
+    "Spring Break": {"start": "2023/4/8", "end": "2023/4/16"}
 }
