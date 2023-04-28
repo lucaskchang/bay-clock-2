@@ -44,7 +44,7 @@
             "end": {"hour": 11, "minute": 35}
         },
         "Lunch": {
-            "start": {"hour": 11, "minute": 30},
+            "start": {"hour": 11, "minute": 35},
             "end": {"hour": 12, "minute": 30}
         },
         "A": {
@@ -74,7 +74,7 @@
             "end": {"hour": 11, "minute": 35}
         },
         "Lunch": {
-            "start": {"hour": 11, "minute": 30},
+            "start": {"hour": 11, "minute": 35},
             "end": {"hour": 12, "minute": 30}
         },
         "E": {
