@@ -1,0 +1,796 @@
+{
+    "2023/2/2": {
+      "Morning Meeting": {
+          "start": {"hour": 8, "minute": 30},
+          "end": {"hour": 8, "minute": 55}
+      },
+      "B": {
+          "start": {"hour": 9, "minute": 0},
+          "end": {"hour": 10, "minute": 30}
+      },
+      "A": {
+          "start": {"hour": 10, "minute": 40},
+          "end": {"hour": 12, "minute": 10}
+      },
+      "Lunch": {
+          "start": {"hour": 12, "minute": 10},
+          "end": {"hour": 13, "minute": 0}
+      },
+      "C": {
+          "start": {"hour": 13, "minute": 0},
+          "end": {"hour": 14, "minute": 30}
+      },
+      "Report Card Review": {
+          "start": {"hour": 14, "minute": 30},
+          "end": {"hour": 15, "minute": 30}
+      }
+    },
+    "2023/2/3": {
+      "Group Advisory/1-on-1s": {
+        "start": {"hour": 8, "minute": 30},
+        "end": {"hour": 8, "minute": 55}
+      },
+      "D": {
+          "start": {"hour": 9, "minute": 0},
+          "end": {"hour": 10, "minute": 30}
+      },
+      "F": {
+          "start": {"hour": 10, "minute": 40},
+          "end": {"hour": 12, "minute": 10}
+      },
+      "Lunch": {
+          "start": {"hour": 12, "minute": 10},
+          "end": {"hour": 13, "minute": 0}
+      },
+      "E": {
+          "start": {"hour": 13, "minute": 0},
+          "end": {"hour": 14, "minute": 30}
+      }
+    },
+    "2023/2/9": {
+      "Group Advisory/1-on-1s": {
+        "start": {"hour": 8, "minute": 30},
+        "end": {"hour": 8, "minute": 55}
+      },
+      "A": {
+        "start": {"hour": 9, "minute": 0},
+        "end": {"hour": 10, "minute": 15}
+      },
+      "B": {
+        "start": {"hour": 10, "minute": 20},
+        "end": {"hour": 11, "minute": 35}
+      },
+      "Lunch": {
+        "start": {"hour": 11, "minute": 35},
+        "end": {"hour": 12, "minute": 30}
+      },
+      "C": {
+        "start": {"hour": 12, "minute": 30},
+        "end": {"hour": 13, "minute": 45}
+      },
+      "D": {
+        "start": {"hour": 13, "minute": 50},
+        "end": {"hour": 15, "minute": 5}
+      },
+      "Activities + Sports/Drama": {
+        "start": {"hour": 15, "minute": 15},
+        "end": {"hour": 16, "minute": 45}
+      }
+    },
+    "2023/2/10": {
+      "Morning Meeting": {
+        "start": {"hour": 8, "minute": 30},
+        "end": {"hour": 8, "minute": 55}
+      },
+      "E": {
+        "start": {"hour": 9, "minute": 0},
+        "end": {"hour": 10, "minute": 15}
+      },
+      "F": {
+        "start": {"hour": 10, "minute": 20},
+        "end": {"hour": 11, "minute": 35}
+      },
+      "Lunch": {
+        "start": {"hour": 11, "minute": 35},
+        "end": {"hour": 12, "minute": 30}
+      }
+  },
+  "2023/2/13": {
+    "9/10 Combined Advisory + 11/12 Class Meeting": {
+        "start": {"hour": 8, "minute": 30},
+        "end": {"hour": 8, "minute": 55}
+    },
+    "A": {
+        "start": {"hour": 9, "minute": 0},
+        "end": {"hour": 10, "minute": 15}
+    },
+    "B": {
+        "start": {"hour": 10, "minute": 20},
+        "end": {"hour": 11, "minute": 35}
+    },
+    "Lunch": {
+        "start": {"hour": 11, "minute": 35},
+        "end": {"hour": 12, "minute": 30}
+    },
+    "C": {
+        "start": {"hour": 12, "minute": 30},
+        "end": {"hour": 13, "minute": 45}
+    },
+    "D": {
+        "start": {"hour": 13, "minute": 50},
+        "end": {"hour": 15, "minute": 5}
+    },
+    "Tutorial": {
+        "start": {"hour": 15, "minute": 5},
+        "end": {"hour": 15, "minute": 35}
+    },
+    "Activities + Sports/Drama": {
+        "start": {"hour": 15, "minute": 45},
+        "end": {"hour": 17, "minute": 0}
+    }
+  },
+  "2023/2/14": {
+    "Morning Meeting": {
+        "start": {"hour": 8, "minute": 30},
+        "end": {"hour": 8, "minute": 55}
+    },
+    "E": {
+        "start": {"hour": 9, "minute": 0},
+        "end": {"hour": 10, "minute": 15}
+    },
+    "F": {
+        "start": {"hour": 10, "minute": 20},
+        "end": {"hour": 11, "minute": 35}
+    },
+    "Lunch": {
+        "start": {"hour": 11, "minute": 30},
+        "end": {"hour": 12, "minute": 30}
+    },
+    "A": {
+        "start": {"hour": 12, "minute": 30},
+        "end": {"hour": 13, "minute": 45}
+    },
+    "B": {
+        "start": {"hour": 13, "minute": 50},
+        "end": {"hour": 15, "minute": 5}
+    },
+    "Tutorial": {
+        "start": {"hour": 15, "minute": 5},
+        "end": {"hour": 15, "minute": 35}
+    },
+    "Activities + Sports/Drama": {
+        "start": {"hour": 15, "minute": 45},
+        "end": {"hour": 17, "minute": 0}
+    }
+  },
+  "2023/2/15": {
+    "9/10 Prevention Solution Presentation": {
+        "start": {"hour": 8, "minute": 30},
+        "end": {"hour": 9, "minute": 30}
+    },
+    "C": {
+        "start": {"hour": 9, "minute": 35},
+        "end": {"hour": 10, "minute": 40}
+    },
+    "D": {
+        "start": {"hour": 10, "minute": 50},
+        "end": {"hour": 11, "minute": 55}
+    },
+    "Lunch": {
+        "start": {"hour": 11, "minute": 55},
+        "end": {"hour": 12, "minute": 50}
+    },
+    "E": {
+        "start": {"hour": 12, "minute": 50},
+        "end": {"hour": 13, "minute": 55}
+    },
+    "F": {
+        "start": {"hour": 14, "minute": 0},
+        "end": {"hour": 15, "minute": 5}
+    },
+    "Tutorial": {
+        "start": {"hour": 15, "minute": 5},
+        "end": {"hour": 15, "minute": 35}
+    },
+    "Activities + Sports/Drama": {
+        "start": {"hour": 15, "minute": 45},
+        "end": {"hour": 17, "minute": 0}
+    }
+  },
+  "2023/2/16": {
+    "11/12 Prevention Solution Presentation": {
+        "start": {"hour": 8, "minute": 30},
+        "end": {"hour": 9, "minute": 30}
+    },
+    "B": {
+        "start": {"hour": 9, "minute": 30},
+        "end": {"hour": 10, "minute": 55}
+    },
+    "A": {
+        "start": {"hour": 11, "minute": 5},
+        "end": {"hour": 12, "minute": 25}
+    },
+    "Lunch": {
+        "start": {"hour": 12, "minute": 25},
+        "end": {"hour": 13, "minute": 15}
+    },
+    "C": {
+        "start": {"hour": 13, "minute": 15},
+        "end": {"hour": 14, "minute": 35}
+    },
+    "Tutorial": {
+        "start": {"hour": 14, "minute": 30},
+        "end": {"hour": 15, "minute": 0}
+    },
+    "Activities + Sports/Drama": {
+        "start": {"hour": 15, "minute": 0},
+        "end": {"hour": 16, "minute": 30}
+    }
+  },
+  "2023/2/21": {
+    "Group Advisory/1-on-1s": {
+      "start": {"hour": 8, "minute": 30},
+      "end": {"hour": 8, "minute": 55}
+    },
+    "A": {
+      "start": {"hour": 9, "minute": 0},
+      "end": {"hour": 10, "minute": 30}
+    },
+    "B": {
+        "start": {"hour": 10, "minute": 40},
+        "end": {"hour": 12, "minute": 10}
+    },
+    "Lunch": {
+        "start": {"hour": 12, "minute": 10},
+        "end": {"hour": 13, "minute": 0}
+    },
+    "C": {
+        "start": {"hour": 13, "minute": 0},
+        "end": {"hour": 14, "minute": 30}
+    },
+    "Tutorial": {
+        "start": {"hour": 14, "minute": 30},
+        "end": {"hour": 15, "minute": 0}
+    },
+    "Activities + Sports/Drama": {
+        "start": {"hour": 15, "minute": 0},
+        "end": {"hour": 16, "minute": 30}
+    }
+  },
+  "2023/2/22": {
+    "Morning Meeting": {
+      "start": {"hour": 8, "minute": 30},
+      "end": {"hour": 8, "minute": 55}
+    },
+    "D": {
+      "start": {"hour": 9, "minute": 0},
+      "end": {"hour": 10, "minute": 30}
+    },
+    "E": {
+        "start": {"hour": 10, "minute": 40},
+        "end": {"hour": 12, "minute": 10}
+    },
+    "Lunch": {
+        "start": {"hour": 12, "minute": 10},
+        "end": {"hour": 13, "minute": 0}
+    },
+    "F": {
+        "start": {"hour": 13, "minute": 0},
+        "end": {"hour": 14, "minute": 30}
+    },
+    "Tutorial": {
+        "start": {"hour": 14, "minute": 30},
+        "end": {"hour": 15, "minute": 0}
+    },
+    "Activities + Sports/Drama": {
+        "start": {"hour": 15, "minute": 0},
+        "end": {"hour": 16, "minute": 30}
+    }
+  },
+  "2023/3/3": {
+    "D": {
+        "start": {"hour": 8, "minute": 30},
+        "end": {"hour": 9, "minute": 55}
+    },
+    "F": {
+        "start": {"hour": 10, "minute": 5},
+        "end": {"hour": 11, "minute": 30}
+    },
+    "Lunch": {
+        "start": {"hour": 11, "minute": 30},
+        "end": {"hour": 12, "minute": 20}
+    },
+    "E": {
+        "start": {"hour": 12, "minute": 20},
+        "end": {"hour": 13, "minute": 45}
+    },
+    "Activities + Sports/Drama": {
+        "start": {"hour": 14, "minute": 30},
+        "end": {"hour": 16, "minute": 0}
+    }
+  },
+  "2023/3/21": {
+    "Morning Meeting": {
+        "start": {"hour": 8, "minute": 30},
+        "end": {"hour": 8, "minute": 55}
+    },
+    "E": {
+        "start": {"hour": 9, "minute": 0},
+        "end": {"hour": 10, "minute": 15}
+    },
+    "F": {
+        "start": {"hour": 10, "minute": 20},
+        "end": {"hour": 11, "minute": 35}
+    },
+    "Lunch": {
+        "start": {"hour": 11, "minute": 30},
+        "end": {"hour": 12, "minute": 30}
+    },
+    "A": {
+        "start": {"hour": 12, "minute": 30},
+        "end": {"hour": 13, "minute": 45}
+    },
+    "B": {
+        "start": {"hour": 13, "minute": 50},
+        "end": {"hour": 15, "minute": 5}
+    },
+    "Tutorial": {
+        "start": {"hour": 15, "minute": 5},
+        "end": {"hour": 15, "minute": 35}
+    },
+    "Activities + Sports/Drama": {
+        "start": {"hour": 15, "minute": 45},
+        "end": {"hour": 17, "minute": 0}
+    }
+  },
+  "2023/3/23": {
+    "Morning Meeting": {
+        "start": {"hour": 8, "minute": 30},
+        "end": {"hour": 8, "minute": 55}
+    },
+    "A": {
+        "start": {"hour": 9, "minute": 0},
+        "end": {"hour": 10, "minute": 15}
+    },
+    "B": {
+        "start": {"hour": 10, "minute": 20},
+        "end": {"hour": 11, "minute": 35}
+    },
+    "Lunch": {
+        "start": {"hour": 11, "minute": 35},
+        "end": {"hour": 12, "minute": 30}
+    },
+    "C": {
+        "start": {"hour": 12, "minute": 30},
+        "end": {"hour": 13, "minute": 45}
+    },
+    "D": {
+        "start": {"hour": 13, "minute": 50},
+        "end": {"hour": 15, "minute": 5}
+    },
+    "Tutorial": {
+        "start": {"hour": 15, "minute": 5},
+        "end": {"hour": 15, "minute": 35}
+    },
+    "Activities + Sports/Drama": {
+        "start": {"hour": 15, "minute": 45},
+        "end": {"hour": 17, "minute": 0}
+    }
+  },
+  "2023/3/24": {
+    "Morning Meeting": {
+        "start": {"hour": 8, "minute": 30},
+        "end": {"hour": 8, "minute": 55}
+    },
+    "E": {
+        "start": {"hour": 9, "minute": 0},
+        "end": {"hour": 10, "minute": 15}
+    },
+    "F": {
+        "start": {"hour": 10, "minute": 20},
+        "end": {"hour": 11, "minute": 35}
+    },
+    "Lunch / Elective Fair": {
+        "start": {"hour": 11, "minute": 30},
+        "end": {"hour": 12, "minute": 30}
+    }
+  },
+  "2023/3/27": {
+    "Morning Meeting": {
+        "start": {"hour": 8, "minute": 30},
+        "end": {"hour": 8, "minute": 55}
+    },
+    "A": {
+        "start": {"hour": 9, "minute": 0},
+        "end": {"hour": 10, "minute": 30}
+    },
+    "B": {
+        "start": {"hour": 10, "minute": 40},
+        "end": {"hour": 12, "minute": 10}
+    },
+    "Lunch": {
+        "start": {"hour": 12, "minute": 10},
+        "end": {"hour": 13, "minute": 0}
+    },
+    "C": {
+        "start": {"hour": 13, "minute": 0},
+        "end": {"hour": 14, "minute": 30}
+    },
+    "Tutorial": {
+        "start": {"hour": 14, "minute": 30},
+        "end": {"hour": 14, "minute": 55}
+    },
+"Activities + Sports/Drama": {
+        "start": {"hour": 15, "minute": 0},
+        "end": {"hour": 16, "minute": 30}
+}
+},
+"2023/3/28": {
+    "Group Advisory/1-on-1s": {
+        "start": {"hour": 8, "minute": 30},
+        "end": {"hour": 8, "minute": 55}
+    },
+    "D": {
+        "start": {"hour": 9, "minute": 0},
+        "end": {"hour": 10, "minute": 30}
+    },
+    "E": {
+        "start": {"hour": 10, "minute": 40},
+        "end": {"hour": 12, "minute": 10}
+    },
+    "Lunch": {
+        "start": {"hour": 12, "minute": 10},
+        "end": {"hour": 13, "minute": 0}
+    },
+    "F": {
+        "start": {"hour": 13, "minute": 0},
+        "end": {"hour": 14, "minute": 30}
+    },
+    "Tutorial": {
+        "start": {"hour": 14, "minute": 30},
+        "end": {"hour": 14, "minute": 55}
+    },
+"Activities + Sports/Drama": {
+        "start": {"hour": 15, "minute": 0},
+        "end": {"hour": 16, "minute": 30}
+}
+},
+"2023/3/29": {
+    "Morning Meeting": {
+        "start": {"hour": 8, "minute": 30},
+        "end": {"hour": 8, "minute": 55}
+    },
+    "B": {
+        "start": {"hour": 9, "minute": 0},
+        "end": {"hour": 10, "minute": 30}
+    },
+    "A": {
+        "start": {"hour": 10, "minute": 40},
+        "end": {"hour": 12, "minute": 10}
+    },
+    "Lunch": {
+        "start": {"hour": 12, "minute": 10},
+        "end": {"hour": 13, "minute": 0}
+    },
+    "C": {
+        "start": {"hour": 13, "minute": 0},
+        "end": {"hour": 14, "minute": 30}
+    },
+    "Tutorial": {
+        "start": {"hour": 14, "minute": 30},
+        "end": {"hour": 14, "minute": 55}
+    },
+"Activities + Sports/Drama": {
+        "start": {"hour": 15, "minute": 0},
+        "end": {"hour": 16, "minute": 30}
+}
+},
+"2023/3/30": {
+    "Group Advisory/1-on-1s": {
+        "start": {"hour": 8, "minute": 30},
+        "end": {"hour": 8, "minute": 55}
+    },
+    "D": {
+        "start": {"hour": 9, "minute": 0},
+        "end": {"hour": 10, "minute": 30}
+    },
+    "F": {
+        "start": {"hour": 10, "minute": 40},
+        "end": {"hour": 12, "minute": 10}
+    },
+    "Lunch": {
+        "start": {"hour": 12, "minute": 10},
+        "end": {"hour": 13, "minute": 0}
+    },
+    "E": {
+        "start": {"hour": 13, "minute": 0},
+        "end": {"hour": 14, "minute": 30}
+    },
+    "Tutorial": {
+        "start": {"hour": 14, "minute": 30},
+        "end": {"hour": 14, "minute": 55}
+    },
+"Activities + Sports/Drama": {
+        "start": {"hour": 15, "minute": 0},
+        "end": {"hour": 16, "minute": 30}
+}
+},
+"2023/4/3": {
+  "1:1 Advisor Meetings for Course Selection": {
+      "start": {"hour": 8, "minute": 30},
+      "end": {"hour": 8, "minute": 55}
+  },
+  "A": {
+      "start": {"hour": 9, "minute": 0},
+      "end": {"hour": 10, "minute": 15}
+  },
+  "B": {
+      "start": {"hour": 10, "minute": 20},
+      "end": {"hour": 11, "minute": 35}
+  },
+  "Lunch": {
+      "start": {"hour": 11, "minute": 35},
+      "end": {"hour": 12, "minute": 30}
+  },
+  "C": {
+      "start": {"hour": 12, "minute": 30},
+      "end": {"hour": 13, "minute": 45}
+  },
+  "D": {
+      "start": {"hour": 13, "minute": 50},
+      "end": {"hour": 15, "minute": 5}
+  },
+  "Tutorial": {
+      "start": {"hour": 15, "minute": 5},
+      "end": {"hour": 15, "minute": 35}
+  },
+  "Activities + Sports/Drama": {
+          "start": {"hour": 15, "minute": 45},
+          "end": {"hour": 17, "minute": 0}
+  }
+},
+"2023/4/4": {
+  "1:1 Advisor Meetings for Course Selection": {
+      "start": {"hour": 8, "minute": 30},
+      "end": {"hour": 8, "minute": 55}
+  },
+  "E": {
+      "start": {"hour": 9, "minute": 0},
+      "end": {"hour": 10, "minute": 15}
+  },
+  "F": {
+      "start": {"hour": 10, "minute": 20},
+      "end": {"hour": 11, "minute": 35}
+  },
+  "Lunch": {
+      "start": {"hour": 11, "minute": 30},
+      "end": {"hour": 12, "minute": 30}
+  },
+  "A": {
+      "start": {"hour": 12, "minute": 30},
+      "end": {"hour": 13, "minute": 45}
+  },
+  "B": {
+      "start": {"hour": 13, "minute": 50},
+      "end": {"hour": 15, "minute": 5}
+  },
+  "Tutorial": {
+      "start": {"hour": 15, "minute": 5},
+      "end": {"hour": 15, "minute": 35}
+  },
+  "Activities + Sports/Drama": {
+          "start": {"hour": 15, "minute": 45},
+          "end": {"hour": 17, "minute": 0}
+  }
+},
+"2023/4/5": {
+  "1:1 Advisor Meetings for Course Selection": {
+      "start": {"hour": 8, "minute": 30},
+      "end": {"hour": 8, "minute": 55}
+  },
+  "C": {
+      "start": {"hour": 9, "minute": 0},
+      "end": {"hour": 10, "minute": 15}
+  },
+  "D": {
+      "start": {"hour": 10, "minute": 20},
+      "end": {"hour": 11, "minute": 35}
+  },
+  "Lunch": {
+      "start": {"hour": 11, "minute": 30},
+      "end": {"hour": 12, "minute": 30}
+  },
+  "E": {
+      "start": {"hour": 12, "minute": 30},
+      "end": {"hour": 13, "minute": 45}
+  },
+  "F": {
+      "start": {"hour": 13, "minute": 50},
+      "end": {"hour": 15, "minute": 5}
+  },
+  "Tutorial": {
+      "start": {"hour": 15, "minute": 5},
+      "end": {"hour": 15, "minute": 35}
+  },
+  "Activities + Sports/Drama": {
+          "start": {"hour": 15, "minute": 45},
+          "end": {"hour": 17, "minute": 0}
+  }
+},
+"2023/4/6": {
+  "A": {
+      "start": {"hour": 8, "minute": 30},
+      "end": {"hour": 9, "minute": 35}
+  },
+  "B": {
+      "start": {"hour": 9, "minute": 40},
+      "end": {"hour": 10, "minute": 45}
+  },
+  "C": {
+      "start": {"hour": 10, "minute": 50},
+      "end": {"hour": 11, "minute": 55}
+  },
+  "9/10/11 1:1 Course Selection Meetings or 12th Grade Lunch": {
+      "start": {"hour": 11, "minute": 55},
+      "end": {"hour": 12, "minute": 30}
+  },
+  "9/10/11 Lunch or 12th Grade SSP Set up": {
+      "start": {"hour": 12, "minute": 30},
+      "end": {"hour": 13, "minute": 0}
+  },
+  "SSP School-wide Exhibition": {
+      "start": {"hour": 13, "minute": 0},
+      "end": {"hour": 14, "minute": 30}
+  },
+  "Tutorial": {
+      "start": {"hour": 14, "minute": 30},
+      "end": {"hour": 15, "minute": 0}
+  },
+  "Activities + Sports/Drama": {
+      "start": {"hour": 17, "minute": 0},
+      "end": {"hour": 19, "minute": 0}
+  }
+},
+"2023/4/7": {
+  "Report Card Review": {
+    "start": {"hour": 8, "minute": 30},
+    "end": {"hour": 9, "minute": 45}
+  },
+  "D": {
+    "start": {"hour": 9, "minute": 45},
+    "end": {"hour": 10, "minute": 50}
+  },
+  "E": {
+    "start": {"hour": 10, "minute": 55},
+    "end": {"hour": 12, "minute": 0}
+  },
+  "Lunch": {
+    "start": {"hour": 12, "minute": 0},
+    "end": {"hour": 13, "minute": 0}
+  },
+  "F": {
+    "start": {"hour": 13, "minute": 0},
+    "end": {"hour": 14, "minute": 5}
+  },
+  "Activities + Sports/Drama": {
+    "start": {"hour": 14, "minute": 30},
+    "end": {"hour": 17, "minute": 0}
+  }
+},
+"2023/4/20": {
+  "Group Advisory/1-on-1s": {
+      "start": {"hour": 8, "minute": 30},
+      "end": {"hour": 8, "minute": 55}
+  },
+  "A": {
+      "start": {"hour": 9, "minute": 0},
+      "end": {"hour": 10, "minute": 15}
+  },
+  "B": {
+      "start": {"hour": 10, "minute": 20},
+      "end": {"hour": 11, "minute": 35}
+  },
+  "Lunch": {
+      "start": {"hour": 11, "minute": 35},
+      "end": {"hour": 12, "minute": 30}
+  },
+  "C": {
+      "start": {"hour": 12, "minute": 30},
+      "end": {"hour": 13, "minute": 45}
+  },
+  "D": {
+      "start": {"hour": 13, "minute": 50},
+      "end": {"hour": 15, "minute": 5}
+  },
+  "Tutorial": {
+      "start": {"hour": 15, "minute": 5},
+      "end": {"hour": 15, "minute": 35}
+  },
+  "Activities + Sports/Drama": {
+          "start": {"hour": 15, "minute": 45},
+          "end": {"hour": 17, "minute": 0}
+  }
+},
+"2023/4/21": {
+  "Morning Meeting": {
+      "start": {"hour": 8, "minute": 30},
+      "end": {"hour": 8, "minute": 55}
+  },
+  "E": {
+      "start": {"hour": 9, "minute": 0},
+      "end": {"hour": 10, "minute": 15}
+  },
+  "F": {
+      "start": {"hour": 10, "minute": 20},
+      "end": {"hour": 11, "minute": 35}
+  },
+  "Lunch": {
+      "start": {"hour": 11, "minute": 35},
+      "end": {"hour": 12, "minute": 30}
+  },
+  "Bay Day": {
+      "start": {"hour": 12, "minute": 30},
+      "end": {"hour": 15, "minute": 0}
+  },
+  "Activities + Sports/Drama": {
+      "start": {"hour": 15, "minute": 0},
+      "end": {"hour": 17, "minute": 0}
+  }
+},
+"2023/5/4": {
+  "Group Advisory/1-on-1s": {
+      "start": {"hour": 8, "minute": 30},
+      "end": {"hour": 8, "minute": 55}
+  },
+  "A": {
+      "start": {"hour": 9, "minute": 0},
+      "end": {"hour": 10, "minute": 15}
+  },
+  "B": {
+      "start": {"hour": 10, "minute": 20},
+      "end": {"hour": 11, "minute": 35}
+  },
+  "Lunch": {
+      "start": {"hour": 11, "minute": 35},
+      "end": {"hour": 12, "minute": 30}
+  },
+  "Community Day": {
+      "start": {"hour": 12, "minute": 30},
+      "end": {"hour": 15, "minute": 0}
+  },
+  "Activities + Sports/Drama": {
+      "start": {"hour": 15, "minute": 15},
+      "end": {"hour": 17, "minute": 15}
+  }
+},
+"2023/5/5": {
+  "Morning Meeting": {
+      "start": {"hour": 8, "minute": 30},
+      "end": {"hour": 8, "minute": 55}
+  },
+  "C": {
+      "start": {"hour": 9, "minute": 0},
+      "end": {"hour": 10, "minute": 15}
+  },
+  "D": {
+      "start": {"hour": 10, "minute": 20},
+      "end": {"hour": 11, "minute": 35}
+  },
+  "Lunch": {
+      "start": {"hour": 11, "minute": 35},
+      "end": {"hour": 12, "minute": 30}
+  },
+  "E": {
+      "start": {"hour": 12, "minute": 30},
+      "end": {"hour": 13, "minute": 45}
+  },
+  "F": {
+      "start": {"hour": 13, "minute": 50},
+      "end": {"hour": 15, "minute": 5}
+  },
+  "Activities + Sports/Drama": {
+      "start": {"hour": 15, "minute": 15},
+      "end": {"hour": 17, "minute": 15}
+  }
+}
+}
