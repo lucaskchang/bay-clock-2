@@ -6,5 +6,6 @@
     "Teacher Proffesional Development": {"start": "2023/3/31", "end": "2023/4/1"},
     "Spring Break": {"start": "2023/4/8", "end": "2023/4/16"},
     "Immersive 2 Break": {"start": "2023/5/20", "end": "2023/5/30"},
-    "Midterm Break": {"start": "2023/10/18", "end": "2023/10/21"}
+    "Midterm Break": {"start": "2023/10/18", "end": "2023/10/21"},
+    "Professional Development Day": {"start": "2023/11/3", "end": "2023/11/4"}
 }
