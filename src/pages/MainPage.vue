@@ -135,9 +135,7 @@
 
     <!-- lunch menu -->
     <q-dialog v-model="lunchMenu">
-      <q-img style="min-height: 90vh; min-width:40vw;" src="menu/1.jpg" />
-      <br />
-      <q-img style="min-height: 90vh; min-width:40vw;" src="menu/2.jpg" />
+      <h1 style="color: white">I DON"T HAVE THE LUNCH MENU. PLEASE DON"T ASK ME FOR IT. I WILL UPDATE THIS AS SOON AS I GET IT.</h1>
     </q-dialog>
 
     <!-- custom schedule menu -->
@@ -646,7 +644,7 @@
         v-for="index in isMobile ? 15 : 50"
         :key="index"
         class="holiday-icon"
-        :src="'images/icons/' + holidays[holiday]['icon']"
+        :src="'images/icons/' + icons[index]"
       />
     </div>
   </div>
@@ -1328,6 +1326,11 @@ watch(holidayBool, (state: boolean) => {
 });
 
 // load local storage once mounted
+// HOLIDAY STUFF
+const icons = []
+for (let i = 0; i < 51; i++) {
+  icons.push(holidays[holiday.value]["icons"][Math.floor(Math.random() * holidays[holiday.value]["icons"].length)])
+}
 onMounted(() => {
   var check_custom_blocks = <ScheduleType>$q.localStorage.getItem("custom_blocks");
   if (check_custom_blocks) {

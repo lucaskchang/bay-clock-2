@@ -2,7 +2,7 @@ type HolidayType = {
   [index: string]: {
     start: string;
     end: string;
-    icon: string;
+    icons: string[];
     color: string;
   };
 };

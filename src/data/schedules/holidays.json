@@ -1,3 +1,4 @@
 {
-  "Valentine's Hearts": {"start": "2/10", "end": "2/18", "icon": "heart.png", "color": "pink"}
+  "Valentine's Hearts": {"start": "2/10", "end": "2/18", "icons": ["heart.png"], "color": "pink"},
+  "Halloween Decorations": {"start": "10/29", "end": "11/4", "icons": ["pumpkin.png", "ghost.png", "bat.png"], "color": "orange"}
 }
