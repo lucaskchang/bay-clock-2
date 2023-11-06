@@ -640,7 +640,7 @@
       </p>
     </div>
 
-    <!-- holiday floating icons -->
+    <!-- holiday floating icons
     <div v-if="holiday != '' && holidayBool" class="aboslute-center">
       <img
         v-for="index in isMobile ? 15 : 50"
@@ -649,6 +649,7 @@
         :src="'images/icons/' + icons[index]"
       />
     </div>
+    -->
   </div>
 </template>
 
@@ -1329,10 +1330,11 @@ watch(holidayBool, (state: boolean) => {
 
 // load local storage once mounted
 // HOLIDAY STUFF
-const icons = []
+/* const icons = []
 for (let i = 0; i < 51; i++) {
   icons.push(holidays[holiday.value]["icons"][Math.floor(Math.random() * holidays[holiday.value]["icons"].length)])
 }
+*/
 onMounted(() => {
   var check_custom_blocks = <ScheduleType>$q.localStorage.getItem("custom_blocks");
   if (check_custom_blocks) {
