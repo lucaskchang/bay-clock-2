@@ -136,8 +136,6 @@
     <!-- lunch menu -->
     <q-dialog v-model="lunchMenu">
       <q-img style="min-height: 90vh; min-width:40vw;" src="menu/1.jpg" />
-      <br />
-      <q-img style="min-height: 90vh; min-width:40vw;" src="menu/2.jpg" />
     </q-dialog>
 
     <!-- custom schedule menu -->
