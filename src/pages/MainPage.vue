@@ -638,7 +638,7 @@
       </p>
     </div>
 
-    <div>
+    <div v-if="holidayBool">
       <img
         v-for="index in isMobile ? 15 : 50"
         :key="index"
