@@ -9,5 +9,6 @@
     "Professional Development Day": {"start": "2023/11/3", "end": "2023/11/4"},
     "Thanksgiving Break": {"start": "2023/11/18", "end": "2023/11/27"},
     "Winter Break": {"start": "2023/12/16", "end": "2024/1/4"},
-    "MLK Day": {"start": "2024/1/15", "end": "2024/1/16"}
+    "MLK Day": {"start": "2024/1/15", "end": "2024/1/16"},
+    "Immersive 1 Break": {"start": "2024/1/25", "end": "2024/2/1"}
 }
