@@ -39,6 +39,11 @@
       >
         IMMERSIVE
       </div>
+      <div
+        v-if="showGraduationCountdown"
+      >
+        {{ graduationCountdown }}
+      </div>
     </div>
 
     <!-- progress bars -->
@@ -130,6 +135,12 @@
           :label="holiday"
           :color="holidays[holiday]['color']"
         /> -->
+        <q-toggle
+          class="q-ma-sm"
+          v-model="showGraduationCountdown"
+          label="Show Graduation Countdown"
+          color="blue"
+        />
       </div>
     </div>
 
@@ -681,6 +692,12 @@ const usefulLinks: LinksType = useful_links;
 const toolLinks: LinksType = tool_links;
 const presets: StringString = presets_json;
 const changelog: ChangelogType = changelog_json;
+
+const showGraduationCountdown = ref(false);
+const graduationDate = new Date("2024-05-17");
+const graduationCountdown = computed(() => {
+  return Math.ceil((graduationDate.getTime() - time.value.getTime()) / (1000 * 60 * 60 * 24)) + " days until graduation"
+});
 
 // VARS
 const $q = useQuasar(); // quasar instance
@@ -1325,6 +1342,10 @@ watch(styleMenu, function (val) {
 //   $q.localStorage.set("holiday_bool", state);
 // });
 
+watch(showGraduationCountdown, (state: boolean) => {
+  $q.localStorage.set("graduation_countdown", state);
+});
+
 // load local storage once mounted
 // HOLIDAY STUFF
 // const icons = []
@@ -1385,6 +1406,10 @@ onMounted(() => {
   var check_custom_activity_name = <string>$q.localStorage.getItem("custom_activity_name");
   if (check_custom_activity_name) {
     customActivityName.value = check_custom_activity_name;
+  }
+  var check_graduation_countdown = <boolean>$q.localStorage.getItem("graduation_countdown");
+  if (check_graduation_countdown) {
+    showGraduationCountdown.value = check_graduation_countdown;
   }
 });
 
