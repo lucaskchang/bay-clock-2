@@ -128,13 +128,13 @@
           rounded
           no-caps
         />
-        <!-- <q-toggle
+        <q-toggle
           v-if="holiday != ''"
           class="q-ma-sm"
           v-model="holidayBool"
           :label="holiday"
           :color="holidays[holiday]['color']"
-        /> -->
+        />
         <q-toggle
           class="q-ma-sm"
           v-model="showGraduationCountdown"
@@ -649,14 +649,14 @@
       </p>
     </div>
 
-    <!-- <div v-if="holidayBool">
+    <div v-if="holidayBool">
       <img
         v-for="index in isMobile ? 15 : 50"
         :key="index"
         class="holiday-icon"
         :src="'images/icons/' + icons[index]"
       />
-    </div> -->
+    </div>
 
   </div>
 </template>
@@ -814,18 +814,18 @@ const immersive = computed<boolean>(function () {
 });
 
 // computes whether today is in a holiday and returns name if so
-// const holiday = computed<string>(function () {
-//   var now = time.value;
-//   for (const [name, info] of Object.entries(holidays)) {
-//     if (
-//       now > new Date(now.getFullYear() + "/" + info["start"]) &&
-//       now < new Date(now.getFullYear() + "/" + info["end"])
-//     ) {
-//       return name;
-//     }
-//   }
-//   return "";
-// });
+const holiday = computed<string>(function () {
+  var now = time.value;
+  for (const [name, info] of Object.entries(holidays)) {
+    if (
+      now > new Date(now.getFullYear() + "/" + info["start"]) &&
+      now < new Date(now.getFullYear() + "/" + info["end"])
+    ) {
+      return name;
+    }
+  }
+  return "";
+});
 
 // computes the current day's schedule
 const scheduleDictionary = computed<ParsedScheduleType>(function () {
@@ -1338,9 +1338,9 @@ watch(styleMenu, function (val) {
 });
 
 // saves holiday icon preferenecs to local storage when changed
-// watch(holidayBool, (state: boolean) => {
-//   $q.localStorage.set("holiday_bool", state);
-// });
+watch(holidayBool, (state: boolean) => {
+  $q.localStorage.set("holiday_bool", state);
+});
 
 watch(showGraduationCountdown, (state: boolean) => {
   $q.localStorage.set("graduation_countdown", state);
@@ -1348,10 +1348,10 @@ watch(showGraduationCountdown, (state: boolean) => {
 
 // load local storage once mounted
 // HOLIDAY STUFF
-// const icons = []
-// for (let i = 0; i < 51; i++) {
-//   icons.push(holidays[holiday.value]["icons"][Math.floor(Math.random() * holidays[holiday.value]["icons"].length)])
-// }
+const icons = []
+for (let i = 0; i < 51; i++) {
+  icons.push(holidays[holiday.value]["icons"][Math.floor(Math.random() * holidays[holiday.value]["icons"].length)])
+}
 
 onMounted(() => {
   var check_custom_blocks = <ScheduleType>$q.localStorage.getItem("custom_blocks");

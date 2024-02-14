@@ -1,5 +1,5 @@
 {
-  "Valentine's Hearts": {"start": "2/10", "end": "2/18", "icons": ["heart.png"], "color": "pink"},
+  "Valentine's Hearts": {"start": "2/10", "end": "2/18", "icons": ["heart.png", "heart2.png", "heart3.png", "heart4.png", "heart5.png", "heart6.png", "heart7.png"], "color": "pink"},
   "Halloween Decorations": {"start": "10/29", "end": "11/4", "icons": ["pumpkin.png", "ghost.png", "bat.png"], "color": "orange"},
   "Thanksgiving Turkeys ": {"start": "11/11", "end": "11/17", "icons": ["turkey.png"], "color": "brown"},
   "Winter Snow": {"start": "12/9", "end": "12/17", "icons": ["snow.png"], "color": "blue"}
