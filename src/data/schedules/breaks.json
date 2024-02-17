@@ -1,8 +1,7 @@
 {
     "Labor Day": {"start": "2023/9/4", "end": "2023/9/5"},
     "Immersive Break": {"start": "2023/1/26", "end": "2023/2/2"},
-    "Presidents' Day": {"start": "2023/2/20", "end": "2023/2/21"},
-    "Teacher Proffesional Development": {"start": "2023/3/31", "end": "2023/4/1"},
+    "Teacher Professional Development": {"start": "2023/3/31", "end": "2023/4/1"},
     "Spring Break": {"start": "2023/4/8", "end": "2023/4/16"},
     "Immersive 2 Break": {"start": "2023/5/20", "end": "2023/5/30"},
     "Midterm Break": {"start": "2023/10/18", "end": "2023/10/21"},
@@ -10,5 +9,6 @@
     "Thanksgiving Break": {"start": "2023/11/18", "end": "2023/11/27"},
     "Winter Break": {"start": "2023/12/16", "end": "2024/1/4"},
     "MLK Day": {"start": "2024/1/15", "end": "2024/1/16"},
-    "Immersive 1 Break": {"start": "2024/1/25", "end": "2024/2/1"}
+    "Immersive 1 Break": {"start": "2024/1/25", "end": "2024/2/1"},
+    "Presidents' Day": {"start": "2024/2/19", "end": "2024/2/20"}
 }
