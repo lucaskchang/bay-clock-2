@@ -128,13 +128,13 @@
           rounded
           no-caps
         />
-        <q-toggle
+        <!-- <q-toggle
           v-if="holiday != ''"
           class="q-ma-sm"
           v-model="holidayBool"
           :label="holiday"
           :color="holidays[holiday]['color']"
-        />
+        /> -->
         <q-toggle
           class="q-ma-sm"
           v-model="showGraduationCountdown"
@@ -649,14 +649,14 @@
       </p>
     </div>
 
-    <div v-if="holidayBool">
+    <!-- <div v-if="holidayBool">
       <img
         v-for="index in isMobile ? 15 : 50"
         :key="index"
         class="holiday-icon"
         :src="'images/icons/' + icons[index]"
       />
-    </div>
+    </div> -->
 
   </div>
 </template>
