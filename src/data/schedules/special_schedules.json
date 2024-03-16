@@ -796,5 +796,91 @@
       "start": {"hour": 15, "minute": 30},
       "end": {"hour": 17, "minute": 0}
     }
+  },
+  "2024/3/19": {
+    "Morning Meeting": {
+      "start": {"hour": 8, "minute": 30},
+      "end": {"hour": 8, "minute": 55}
+    },
+    "E": {
+      "start": {"hour": 9, "minute": 0},
+      "end": {"hour": 10, "minute": 15}
+    },
+    "F": {
+      "start": {"hour": 10, "minute": 20},
+      "end": {"hour": 11, "minute": 35}
+    },
+    "Lunch": {
+      "start": {"hour": 11, "minute": 35},
+      "end": {"hour": 12, "minute": 30}
+    },
+    "A": {
+      "start": {"hour": 12, "minute": 30},
+      "end": {"hour": 13, "minute": 45}
+    },
+    "B": {
+      "start": {"hour": 13, "minute": 50},
+      "end": {"hour": 15, "minute": 5}
+    },
+    "Activities + Sports/Drama": {
+      "start": {"hour": 15, "minute": 30},
+      "end": {"hour": 17, "minute": 0}
+    }
+  },
+  "2024/3/21": {
+    "Morning Meeting": {
+      "start": {"hour": 8, "minute": 30},
+      "end": {"hour": 8, "minute": 55}
+    },
+    "B": {
+      "start": {"hour": 9, "minute": 0},
+      "end": {"hour": 10, "minute": 30}
+    },
+    "A": {
+      "start": {"hour": 10, "minute": 40},
+      "end": {"hour": 12, "minute": 10}
+    },
+    "Lunch": {
+      "start": {"hour": 12, "minute": 10},
+      "end": {"hour": 13, "minute": 0}
+    },
+    "C": {
+      "start": {"hour": 13, "minute": 0},
+      "end": {"hour": 14, "minute": 30}
+    },
+    "Report Card Reflections": {
+      "start": {"hour": 14, "minute": 35},
+      "end": {"hour": 15, "minute": 35}
+    },
+    "Activities + Sports/Drama": {
+      "start": {"hour": 15, "minute": 45},
+      "end": {"hour": 17, "minute": 15}
+    }
+  },
+  "Fri": {
+    "Report Card Reflections": {
+      "start": {"hour": 8, "minute": 30},
+      "end": {"hour": 8, "minute": 55}
+    },
+    "D": {
+      "start": {"hour": 9, "minute": 0},
+      "end": {"hour": 10, "minute": 30}
+    },
+    "F": {
+      "start": {"hour": 10, "minute": 40},
+      "end": {"hour": 12, "minute": 10}
+    },
+    "Lunch": {
+      "start": {"hour": 12, "minute": 10},
+      "end": {"hour": 13, "minute": 0}
+    },
+    "E": {
+      "start": {"hour": 13, "minute": 0},
+      "end": {"hour": 14, "minute": 30}
+    },
+    "Activities + Sports/Drama": {
+      "start": {"hour": 14, "minute": 35},
+      "end": {"hour": 16, "minute": 30}
+    }
   }
 }
