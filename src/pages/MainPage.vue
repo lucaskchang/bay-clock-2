@@ -632,7 +632,7 @@
           darkMode ? 'text-grey-4' : 'text-dark',
         ]"
       >
-        Created by <a href="https://lucaskchang.com" target="_blank">Lucas Chang</a>
+        Created <span @click="randomize = false">by</span> <a href="https://lucaskchang.com" target="_blank">Lucas Chang</a>
       </p>
       <p :class="['q-mt-sm', darkMode ? 'text-grey-4' : 'text-dark']">
         <a class="cursor-pointer" @click="codeMenu = true" target="_blank">Code</a>
@@ -665,7 +665,7 @@
 // IMPORTS
 import { ref, computed, watch, onMounted } from "vue";
 import { useQuasar, colors } from "quasar";
-import _, { random } from "lodash";
+import _ from "lodash";
 import immersives_json from "../data/schedules/immersives.json";
 import special_schedules from "../data/schedules/special_schedules.json";
 import activities_schedule from "../data/schedules/activity_schedule.json";
@@ -695,11 +695,14 @@ const changelog: ChangelogType = changelog_json;
 
 const showGraduationCountdown = ref(false);
 const graduationDate = new Date("2024-05-17");
-const graduationCountdown = computed(() => {
-  return Math.ceil((graduationDate.getTime() - time.value.getTime()) / (1000 * 60 * 60 * 24)) + " days until graduation"
-});
+// const graduationCountdown = computed(() => {
+//   return Math.ceil((graduationDate.getTime() - time.value.getTime()) / (1000 * 60 * 60 * 24)) + " days until graduation"
+// });
+
+const graduationCountdown = "43829084902 days until graduation"
 
 // APRIL FOOLS
+const randomize = ref(true);
 const possibleBlocks = ["A", "B", "C", "Morning Meeting", "Lunch", "Bay Clock 101", "Tutorial"]
 const randomBlocks = _.shuffle(possibleBlocks);
 const randomSchedule = {}
@@ -850,8 +853,9 @@ const holiday = ""
 const scheduleDictionary = computed<ParsedScheduleType>(function () {
   var now = time.value;
   var unparsedDaySchedule = <UnparsedScheduleType>{};
-
-  return parseScheduleDict(randomSchedule);
+  if (randomize.value) {
+    return parseScheduleDict(randomSchedule);
+  }
 
   if (currentBreak.value.length > 0) {
     return {};
