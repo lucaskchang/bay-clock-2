@@ -695,30 +695,30 @@ const changelog: ChangelogType = changelog_json;
 
 const showGraduationCountdown = ref(false);
 const graduationDate = new Date("2024-05-17");
-// const graduationCountdown = computed(() => {
-//   return Math.ceil((graduationDate.getTime() - time.value.getTime()) / (1000 * 60 * 60 * 24)) + " days until graduation"
-// });
+const graduationCountdown = computed(() => {
+  return Math.ceil((graduationDate.getTime() - time.value.getTime()) / (1000 * 60 * 60 * 24)) + " days until graduation"
+});
 
-const graduationCountdown = "43829084902 days until graduation"
+// const graduationCountdown = "43829084902 days until graduation"
 
 // APRIL FOOLS
-const randomize = ref(true);
-const possibleBlocks = ["A", "B", "C", "Morning Meeting", "Lunch", "Bay Clock 101", "Tutorial"]
-const randomBlocks = _.shuffle(possibleBlocks);
-const randomSchedule = {}
-let startTime = 480;
-for (let i = 0; i < 7; i++) {
-  length = Math.floor(Math.random() * 45) + 45;
-  randomSchedule[randomBlocks[i]] = {
-    start: {hour: Math.floor(startTime / 60), minute: startTime % 60},
-    end: {hour: Math.floor((startTime + length) / 60), minute: (startTime + length) % 60}
-  }
-  startTime += length + 5;
-}
-randomSchedule["Track and Field Practice"] = {
-  start: {hour: (startTime + 15) / 60, minute: (startTime + 15) % 60},
-  end: {hour: (startTime + 120) / 60, minute: (startTime + 120) % 60}
-}
+const randomize = ref(false);
+// const possibleBlocks = ["A", "B", "C", "Morning Meeting", "Lunch", "Bay Clock 101", "Tutorial"]
+// const randomBlocks = _.shuffle(possibleBlocks);
+// const randomSchedule = {}
+// let startTime = 480;
+// for (let i = 0; i < 7; i++) {
+//   length = Math.floor(Math.random() * 45) + 45;
+//   randomSchedule[randomBlocks[i]] = {
+//     start: {hour: Math.floor(startTime / 60), minute: startTime % 60},
+//     end: {hour: Math.floor((startTime + length) / 60), minute: (startTime + length) % 60}
+//   }
+//   startTime += length + 5;
+// }
+// randomSchedule["Track and Field Practice"] = {
+//   start: {hour: (startTime + 15) / 60, minute: (startTime + 15) % 60},
+//   end: {hour: (startTime + 120) / 60, minute: (startTime + 120) % 60}
+// }
 
 // VARS
 const $q = useQuasar(); // quasar instance
