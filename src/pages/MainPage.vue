@@ -135,12 +135,6 @@
           :label="holiday"
           :color="holidays[holiday]['color']"
         /> -->
-        <q-toggle
-          class="q-ma-sm"
-          v-model="showGraduationCountdown"
-          label="Show Graduation Countdown"
-          color="blue"
-        />
       </div>
     </div>
 
@@ -433,6 +427,11 @@
                       v-model="tempToggles[name]"
                       color="primary"
                       :label="name"
+                    />
+                    <q-toggle
+                      v-model="showGraduationCountdown"
+                      label="Graduation Countdown"
+                      color="blue"
                     />
                   </div>
                 </q-tab-panel>
