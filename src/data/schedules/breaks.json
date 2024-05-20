@@ -10,5 +10,6 @@
     "Immersive 1 Break": {"start": "2024/1/25", "end": "2024/2/1"},
     "Presidents' Day": {"start": "2024/2/19", "end": "2024/2/20"},
     "Midterm Break": {"start": "2024/3/15", "end": "2024/3/16"},
-    "Spring Break": {"start": "2024/4/6", "end": "2024/4/13"}
+    "Spring Break": {"start": "2024/4/6", "end": "2024/4/13"},
+    "Summer Break": {"start": "2024/5/18", "end": "2024/8/27"}
 }
