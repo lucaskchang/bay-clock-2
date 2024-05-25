@@ -1,6 +1,6 @@
 {
     "Immersive1": {"start": "2024/1/4", "end": "2024/1/26"},
-    "Immersive2": {"start": "2024/5/30", "end": "2024/06/18"},
+    "Immersive2": {"start": "2024/5/28", "end": "2024/06/14"},
     "Schedule": {
         "Immersive Morning": {
             "start": {"hour": 9, "minute": 0},
